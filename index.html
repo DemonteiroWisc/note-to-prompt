@@ -14,15 +14,14 @@
     <!-- FONTS -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- LIBRARY -->
+    <!-- LIBRARIES -->
     <script src="https://unpkg.com/turndown/dist/turndown.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <style>
         :root {
             /* Light Theme */
-            --bg-body: #f1f5f9; /* Slightly darker for better contrast */
+            --bg-body: #f1f5f9; 
             --bg-card: #ffffff;
             --text-main: #0f172a;
             --text-muted: #64748b;
@@ -90,7 +89,6 @@
         /* --- ADVERTISING ZONES --- */
         .ad-slot {
             background-color: var(--ad-bg);
-            /* Striped pattern to look professional */
             background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.03) 10px, rgba(0,0,0,0.03) 20px);
             border: 1px dashed var(--border);
             border-radius: 8px;
@@ -111,7 +109,7 @@
         /* --- HERO SECTION --- */
         .hero {
             text-align: center;
-            padding: 1rem 1rem 1.5rem 1rem; /* Tighter padding */
+            padding: 1rem 1rem 1.5rem 1rem;
             max-width: 700px;
             margin: 0 auto;
         }
@@ -133,13 +131,12 @@
 
         .editor-grid {
             display: grid;
-            grid-template-columns: 1fr auto 1fr; /* Middle column for arrow */
+            grid-template-columns: 1fr auto 1fr;
             gap: 1rem;
             align-items: center;
             margin-top: 0.5rem;
         }
         
-        /* The Arrow Icon */
         .flow-arrow {
             color: var(--border);
             font-size: 1.5rem;
@@ -149,7 +146,7 @@
 
         @media (max-width: 768px) { 
             .editor-grid { grid-template-columns: 1fr; } 
-            .flow-arrow { display: none; } /* Hide arrow on mobile */
+            .flow-arrow { display: none; }
         }
 
         .box-wrapper { display: flex; flex-direction: column; gap: 0.25rem; width: 100%; }
@@ -162,12 +159,12 @@
             height: 400px;
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 12px; /* Softer corners */
+            border-radius: 12px;
             padding: 1.25rem;
             font-size: 0.95rem;
             overflow-y: auto;
             outline: none;
-            box-shadow: var(--shadow); /* Depth added here */
+            box-shadow: var(--shadow);
             transition: border 0.2s, transform 0.2s;
         }
         .editor:focus { border-color: var(--primary); transform: translateY(-2px); }
@@ -228,21 +225,16 @@
         <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()">🌙 Dark Mode</button>
     </header>
 
-    <!-- AD ZONE 1: TOP LEADERBOARD -->
     <div class="ad-slot ad-leaderboard">Ad Space (Top Leaderboard)</div>
 
     <div class="app-container">
-        
-        <!-- HERO -->
         <section class="hero">
             <h1>Stop fighting with formatting.</h1>
             <p>Paste formatted notes. Get clean Markdown for AI. Instantly.</p>
         </section>
 
-        <!-- APP INTERFACE -->
         <main>
             <div class="editor-grid">
-                <!-- Input Box -->
                 <div class="box-wrapper">
                     <div class="box-header">
                         <span class="box-label">Paste Word/Docs Here</span>
@@ -251,14 +243,13 @@
                     <div id="input" class="editor" contenteditable="true" placeholder="Paste your bullets here..."></div>
                 </div>
 
-                <!-- Visual Arrow for Desktop -->
                 <div class="flow-arrow">→</div>
 
-                <!-- Output Box -->
                 <div class="box-wrapper">
                     <div class="box-header">
-                        <span class="box-label">AI-Ready Markdown</span>
+                        <span class="box-label">AI-Ready Markdown (Editable)</span>
                     </div>
+                    <!-- REMOVED 'readonly' HERE -->
                     <textarea id="output" class="editor" placeholder="Result appears here..."></textarea>
                 </div>
             </div>
@@ -269,13 +260,9 @@
             </div>
         </main>
 
-        <!-- AD ZONE 2: MIDDLE BANNER -->
         <div class="ad-slot ad-mid">Ad Space (Middle Banner)</div>
 
-        <!-- SEO CONTENT & SIDEBAR GRID -->
         <div class="content-grid">
-            
-            <!-- LEFT: SEO TEXT -->
             <article class="article">
                 <h2>Why convert notes for AI?</h2>
                 <p>
@@ -287,7 +274,7 @@
                 <p>We strip the junk and convert content into <strong>Markdown</strong>—the native language of LLMs.</p>
                 <ul>
                     <li><strong>Preserves Hierarchy:</strong> Keeps your nested bullets intact.</li>
-                    <li><strong>Lightweight:</strong> Reduces token count.</li>
+                    <li><strong>Two-Way Sync:</strong> Edit the raw text directly and watch the formatting update.</li>
                     <li><strong>Universal:</strong> Works with all AI models.</li>
                 </ul>
 
@@ -297,11 +284,8 @@
                 </p>
             </article>
 
-            <!-- RIGHT: STICKY SIDEBAR -->
             <aside class="sidebar">
-                <!-- AD ZONE 3: RECTANGLE -->
                 <div class="ad-slot ad-sidebar">Ad Space (300x250)</div>
-                
                 <div style="background:var(--bg-card); padding:1rem; border:1px solid var(--border); border-radius:8px; box-shadow: var(--shadow);">
                     <h4 style="margin:0 0 0.5rem 0; font-size:0.9rem;">🔒 Secure & Private</h4>
                     <p style="margin:0; font-size:0.8rem; color:var(--text-muted);">
@@ -309,7 +293,6 @@
                     </p>
                 </div>
             </aside>
-
         </div>
     </div>
 
@@ -318,52 +301,55 @@
     </footer>
 
     <script>
-        // --- INITIALIZE LIBRARIES ---
+        // --- LOGIC ---
         const turndownService = new TurndownService({ 
             headingStyle: 'atx', 
             bulletListMarker: '-',
             codeBlockStyle: 'fenced' 
         });
-        
+
         const input = document.getElementById('input');
         const output = document.getElementById('output');
         const copyBtn = document.getElementById('copyBtn');
-        
-        // This "lock" prevents the boxes from updating each other in an infinite loop
+
+        // This prevents infinite loops during sync
         let isSyncing = false;
-        
-        // --- BOX 1 -> BOX 2 (Rich Text to Markdown) ---
-        input.addEventListener('input', () => {
+
+        // BOX 1 (Rich Text) -> BOX 2 (Markdown)
+        function convert() {
             if (isSyncing) return;
-            isSyncing = true;
+            if (!input.innerText.trim() && input.innerHTML === "") {
+                output.value = "";
+                return;
+            }
             
-            const html = input.innerHTML;
-            const markdown = turndownService.turndown(html);
+            isSyncing = true;
+            const markdown = turndownService.turndown(input.innerHTML);
             output.value = markdown;
-            
             isSyncing = false;
-        });
+        }
         
-        // --- BOX 2 -> BOX 1 (Markdown to Rich Text) ---
-        output.addEventListener('input', () => {
+        // BOX 2 (Markdown) -> BOX 1 (Rich Text)
+        function reverseConvert() {
             if (isSyncing) return;
+            
             isSyncing = true;
-            
             const markdown = output.value;
-            // marked.parse converts Markdown back to HTML
-            const html = marked.parse(markdown);
-            input.innerHTML = html;
-            
+            // Converts Markdown back to HTML
+            const htmlContent = marked.parse(markdown);
+            input.innerHTML = htmlContent;
             isSyncing = false;
-        });
-        
-        // --- HELPER FUNCTIONS ---
+        }
+
+        input.addEventListener('input', convert);
+        output.addEventListener('input', reverseConvert);
+
         function clearAll() {
             input.innerHTML = "";
             output.value = "";
             input.focus();
         }
-        
+
         async function copyText() {
             if (!output.value) return;
             try {
@@ -373,11 +359,8 @@
                 setTimeout(() => { copyBtn.innerText = originalText; }, 2000);
             } catch (err) { console.error('Failed to copy'); }
         }
-        
-        // Automatically set the current year in the footer
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-        
-        // --- DARK MODE LOGIC ---
+
+        // --- DARK MODE & FOOTER ---
         const html = document.documentElement;
         const themeBtn = document.getElementById('themeBtn');
         
@@ -388,11 +371,13 @@
             themeBtn.innerText = next === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode';
             localStorage.setItem('theme', next);
         }
-        
+
         if (localStorage.getItem('theme')) {
             html.setAttribute('data-theme', localStorage.getItem('theme'));
             themeBtn.innerText = localStorage.getItem('theme') === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode';
         }
+
+        document.getElementById('current-year').textContent = new Date().getFullYear();
     </script>
 </body>
 </html>
