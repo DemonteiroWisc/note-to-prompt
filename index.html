@@ -20,7 +20,6 @@
 
     <style>
         :root {
-            /* Light Theme */
             --bg-body: #f1f5f9; 
             --bg-card: #ffffff;
             --text-main: #0f172a;
@@ -34,7 +33,6 @@
         }
 
         [data-theme="dark"] {
-            /* Dark Theme */
             --bg-body: #0f172a;
             --bg-card: #1e293b;
             --text-main: #f8fafc;
@@ -56,7 +54,6 @@
             transition: background 0.3s, color 0.3s;
         }
 
-        /* --- HEADER --- */
         header {
             position: sticky;
             top: 0;
@@ -86,7 +83,6 @@
         }
         .theme-toggle:hover { background: var(--border); color: var(--text-main); }
 
-        /* --- ADVERTISING ZONES --- */
         .ad-slot {
             background-color: var(--ad-bg);
             background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.03) 10px, rgba(0,0,0,0.03) 20px);
@@ -106,7 +102,6 @@
         .ad-mid { width: 100%; max-width: 728px; height: 90px; margin: 2rem auto; }
         .ad-sidebar { width: 300px; height: 250px; margin-bottom: 1rem; }
 
-        /* --- HERO SECTION --- */
         .hero {
             text-align: center;
             padding: 1rem 1rem 1.5rem 1rem;
@@ -122,7 +117,6 @@
         }
         .hero p { font-size: 1rem; color: var(--text-muted); margin: 0; }
 
-        /* --- MAIN GRID --- */
         .app-container {
             max-width: 1100px;
             margin: 0 auto;
@@ -150,28 +144,34 @@
         }
 
         .box-wrapper { display: flex; flex-direction: column; gap: 0.25rem; width: 100%; }
-        
         .box-header { display: flex; justify-content: space-between; align-items: center; padding: 0 0.25rem; }
         .box-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); }
         .clear-btn { color: var(--primary); font-size: 0.7rem; font-weight: 600; cursor: pointer; }
 
+        /* --- STABLE RESIZABLE BOXES --- */
         .editor {
-            height: 400px;
+            height: 400px; /* Restored Default Height */
+            min-height: 150px;
+            max-height: 1200px;
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 12px;
             padding: 1.25rem;
             font-size: 0.95rem;
-            overflow-y: auto;
             outline: none;
             box-shadow: var(--shadow);
-            transition: border 0.2s, transform 0.2s;
+            
+            /* Vertical resizing enabled */
+            resize: vertical; 
+            overflow: auto; 
+            
+            /* Remove transform transitions to prevent resizing glitches */
+            transition: border 0.2s, background 0.3s, color 0.3s; 
         }
-        .editor:focus { border-color: var(--primary); transform: translateY(-2px); }
+        .editor:focus { border-color: var(--primary); }
         
-        #output { font-family: 'Courier New', monospace; resize: none; color: var(--text-main); }
+        #output { font-family: 'Courier New', monospace; color: var(--text-main); }
 
-        /* --- BUTTONS --- */
         .actions { display: flex; gap: 1rem; margin-top: 1.5rem; justify-content: center; }
         .btn {
             padding: 0.75rem 2rem;
@@ -188,7 +188,6 @@
         .btn-secondary { background: var(--bg-card); border: 1px solid var(--border); color: var(--text-main); }
         .btn-secondary:hover { border-color: var(--text-muted); }
 
-        /* --- CONTENT & SIDEBAR SECTION --- */
         .content-grid {
             display: grid;
             grid-template-columns: 1fr 300px;
@@ -207,7 +206,6 @@
         .article ul { color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.95rem; padding-left: 1.2rem; }
         .article li { margin-bottom: 0.4rem; }
 
-        /* --- FOOTER --- */
         footer {
             text-align: center;
             padding: 2rem;
@@ -249,7 +247,6 @@
                     <div class="box-header">
                         <span class="box-label">AI-Ready Markdown (Editable)</span>
                     </div>
-                    <!-- REMOVED 'readonly' HERE -->
                     <textarea id="output" class="editor" placeholder="Result appears here..."></textarea>
                 </div>
             </div>
@@ -301,7 +298,7 @@
     </footer>
 
     <script>
-        // --- LOGIC ---
+        // --- CONVERSION LOGIC ---
         const turndownService = new TurndownService({ 
             headingStyle: 'atx', 
             bulletListMarker: '-',
@@ -312,37 +309,53 @@
         const output = document.getElementById('output');
         const copyBtn = document.getElementById('copyBtn');
 
-        // This prevents infinite loops during sync
         let isSyncing = false;
 
-        // BOX 1 (Rich Text) -> BOX 2 (Markdown)
         function convert() {
             if (isSyncing) return;
             if (!input.innerText.trim() && input.innerHTML === "") {
                 output.value = "";
                 return;
             }
-            
             isSyncing = true;
-            const markdown = turndownService.turndown(input.innerHTML);
-            output.value = markdown;
+            output.value = turndownService.turndown(input.innerHTML);
             isSyncing = false;
         }
         
-        // BOX 2 (Markdown) -> BOX 1 (Rich Text)
         function reverseConvert() {
             if (isSyncing) return;
-            
             isSyncing = true;
-            const markdown = output.value;
-            // Converts Markdown back to HTML
-            const htmlContent = marked.parse(markdown);
-            input.innerHTML = htmlContent;
+            input.innerHTML = marked.parse(output.value);
             isSyncing = false;
         }
 
         input.addEventListener('input', convert);
         output.addEventListener('input', reverseConvert);
+
+        // --- SMOOTH HEIGHT SYNC LOGIC ---
+        const syncHeight = (source, target) => {
+            const height = source.style.height;
+            if (target.style.height !== height) {
+                target.style.height = height;
+            }
+        };
+
+        // Listen for mouseup and mousemove on the boxes to detect resizing
+        input.addEventListener('mousedown', () => {
+            const onMove = () => syncHeight(input, output);
+            document.addEventListener('mousemove', onMove);
+            document.addEventListener('mouseup', () => {
+                document.removeEventListener('mousemove', onMove);
+            }, { once: true });
+        });
+
+        output.addEventListener('mousedown', () => {
+            const onMove = () => syncHeight(output, input);
+            document.addEventListener('mousemove', onMove);
+            document.addEventListener('mouseup', () => {
+                document.removeEventListener('mousemove', onMove);
+            }, { once: true });
+        });
 
         function clearAll() {
             input.innerHTML = "";
