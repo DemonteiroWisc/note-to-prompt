@@ -17,6 +17,8 @@
     <!-- LIBRARY -->
     <script src="https://unpkg.com/turndown/dist/turndown.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
     <style>
         :root {
             /* Light Theme */
@@ -257,7 +259,7 @@
                     <div class="box-header">
                         <span class="box-label">AI-Ready Markdown</span>
                     </div>
-                    <textarea id="output" class="editor" readonly placeholder="Result appears here..."></textarea>
+                    <textarea id="output" class="editor" placeholder="Result appears here..."></textarea>
                 </div>
             </div>
 
@@ -316,31 +318,52 @@
     </footer>
 
     <script>
-        // --- LOGIC ---
+        // --- INITIALIZE LIBRARIES ---
         const turndownService = new TurndownService({ 
             headingStyle: 'atx', 
             bulletListMarker: '-',
             codeBlockStyle: 'fenced' 
         });
-
+        
         const input = document.getElementById('input');
         const output = document.getElementById('output');
         const copyBtn = document.getElementById('copyBtn');
-
-        function convert() {
-            if (!input.innerText.trim()) return;
-            const markdown = turndownService.turndown(input.innerHTML);
-            output.value = markdown;
-        }
         
-        input.addEventListener('input', convert);
-
+        // This "lock" prevents the boxes from updating each other in an infinite loop
+        let isSyncing = false;
+        
+        // --- BOX 1 -> BOX 2 (Rich Text to Markdown) ---
+        input.addEventListener('input', () => {
+            if (isSyncing) return;
+            isSyncing = true;
+            
+            const html = input.innerHTML;
+            const markdown = turndownService.turndown(html);
+            output.value = markdown;
+            
+            isSyncing = false;
+        });
+        
+        // --- BOX 2 -> BOX 1 (Markdown to Rich Text) ---
+        output.addEventListener('input', () => {
+            if (isSyncing) return;
+            isSyncing = true;
+            
+            const markdown = output.value;
+            // marked.parse converts Markdown back to HTML
+            const html = marked.parse(markdown);
+            input.innerHTML = html;
+            
+            isSyncing = false;
+        });
+        
+        // --- HELPER FUNCTIONS ---
         function clearAll() {
             input.innerHTML = "";
             output.value = "";
             input.focus();
         }
-
+        
         async function copyText() {
             if (!output.value) return;
             try {
@@ -350,8 +373,11 @@
                 setTimeout(() => { copyBtn.innerText = originalText; }, 2000);
             } catch (err) { console.error('Failed to copy'); }
         }
-
-        // --- DARK MODE ---
+        
+        // Automatically set the current year in the footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // --- DARK MODE LOGIC ---
         const html = document.documentElement;
         const themeBtn = document.getElementById('themeBtn');
         
@@ -362,14 +388,11 @@
             themeBtn.innerText = next === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode';
             localStorage.setItem('theme', next);
         }
-
+        
         if (localStorage.getItem('theme')) {
             html.setAttribute('data-theme', localStorage.getItem('theme'));
             themeBtn.innerText = localStorage.getItem('theme') === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode';
         }
-
-        // Automatically set the current year in the footer
-        document.getElementById('current-year').textContent = new Date().getFullYear();
     </script>
 </body>
 </html>
