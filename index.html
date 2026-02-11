@@ -3,116 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PromptPrep | Clean Notes for AI</title>
+    
+    <!-- SEO Meta Tags -->
+    <title>NoteToPrompt | Convert Formatted Notes to AI-Ready Text</title>
+    <meta name="description" content="Easily convert bulleted or indented notes from Google Docs and Word into clean Markdown for ChatGPT, Claude, and Gemini. Preserve your structure for better AI comprehension.">
+    <meta name="keywords" content="note to prompt, convert notes to chatgpt, formatted text to markdown, prompt engineering tool">
+    
+    <!-- Modern Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Turndown Library for HTML-to-Markdown conversion -->
     <script src="https://unpkg.com/turndown/dist/turndown.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
     <style>
-        :root { --primary: #2563eb; --bg: #ffffff; --text: #1f2937; --border: #e5e7eb; }
-        body { font-family: 'Inter', sans-serif; background-color: #f9fafb; color: var(--text); margin: 0; padding: 0; }
-        
-        /* Ad Slot Styling */
-        .ad-zone { background: #f3f4f6; border: 1px dashed #d1d5db; margin: 20px auto; text-align: center; color: #9ca3af; font-size: 12px; display: flex; align-items: center; justify-content: center; }
-        .top-ad { width: 100%; max-width: 728px; height: 90px; }
-        .sidebar-ad { width: 300px; height: 250px; }
+        :root {
+            --primary: #000000;
+            --accent: #2563eb;
+            --bg: #ffffff;
+            --secondary-bg: #f9fafb;
+            --border: #e5e7eb;
+            --text-main: #111827;
+            --text-muted: #6b7280;
+        }
 
-        .navbar { background: white; border-bottom: 1px solid var(--border); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-weight: 600; font-size: 1.25rem; color: var(--primary); }
-        
-        .main-container { max-width: 1100px; margin: 2rem auto; padding: 0 1rem; display: grid; grid-template-columns: 1fr 300px; gap: 2rem; }
-        @media (max-width: 900px) { .main-container { grid-template-columns: 1fr; } .sidebar-ad { display: none; } }
+        * { box-sizing: border-box; }
+        body { 
+            font-family: 'Inter', -apple-system, sans-serif; 
+            background-color: var(--bg); 
+            color: var(--text-main); 
+            margin: 0; 
+            line-height: 1.5;
+        }
 
-        .editor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-        @media (max-width: 600px) { .editor-grid { grid-template-columns: 1fr; } }
+        /* Ad Sections - Pre-configured for future scripts */
+        .ad-container {
+            background: #fafafa;
+            border: 1px dashed #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 20px auto;
+        }
+        .ad-top { width: 100%; max-width: 728px; height: 90px; }
+        .ad-sidebar { width: 100%; height: 250px; margin-top: 20px; }
 
-        .box-label { font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; color: #4b5563; }
-        #input, #output { width: 100%; height: 400px; background: white; border: 1px solid var(--border); border-radius: 8px; padding: 1rem; box-sizing: border-box; font-size: 14px; overflow-y: auto; outline: none; transition: border 0.2s; }
-        #input:focus { border-color: var(--primary); }
-        
-        .controls { margin-top: 1rem; display: flex; gap: 1rem; }
-        button { padding: 0.75rem 1.5rem; border-radius: 6px; border: none; font-weight: 600; cursor: pointer; transition: 0.2s; }
-        .btn-primary { background: var(--primary); color: white; flex: 1; }
-        .btn-primary:hover { background: #1d4ed8; }
-        .btn-copy { background: #f3f4f6; color: var(--text); border: 1px solid var(--border); }
-        .btn-copy:hover { background: #e5e7eb; }
+        header {
+            border-bottom: 1px solid var(--border);
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-        footer { text-align: center; padding: 4rem 1rem; color: #6b7280; font-size: 0.875rem; }
+        .logo { font-weight: 700; font-size: 1.25rem; letter-spacing: -0.5px; }
+        .logo span { color: var(--accent); }
+
+        .wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2.5rem;
+        }
+
+        @media (max-width: 1024px) {
+            .wrapper { grid-template-columns: 1fr; }
+            .sidebar { display: none; }
+        }
+
+        .workspace { display: flex; flex-direction: column; gap: 1.5rem; }
+
+        .editor-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .editor-group { grid-template-columns: 1fr; }
+        }
+
+        .box-container { display: flex; flex-direction: column; gap: 0.5rem; }
+        label { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); }
+
+        #input-area, #output-area {
+            height: 450px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            font-size: 14px;
+            background: white;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        #input-area:focus { border-color: var(--accent); }
+        #input-area { overflow-y: auto; }
+        #output-area { background-color: var(--secondary-bg); color: #333; font-family: 'Courier New', monospace; resize: none; }
+
+        .actions { display: flex; gap: 1rem; }
+        button {
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            font-size: 14px;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .btn-main { background: var(--primary); color: white; }
+        .btn-main:hover { background: #333; }
+        .btn-secondary { background: white; border: 1px solid var(--border); color: var(--text-main); }
+        .btn-secondary:hover { background: var(--secondary-bg); }
+
+        .info-section { margin-top: 3rem; border-top: 1px solid var(--border); padding-top: 2rem; }
+        .info-section h2 { font-size: 1.5rem; margin-bottom: 1rem; }
+        .info-section p { color: var(--text-muted); max-width: 700px; }
+
+        footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; font-size: 0.85rem; color: var(--text-muted); }
     </style>
 </head>
 <body>
 
-    <nav class="navbar">
-        <div class="logo">PromptPrep</div>
-        <div><a href="#" style="text-decoration:none; color:#6b7280; font-size:14px;">How it works</a></div>
-    </nav>
+<header>
+    <div class="logo">NoteTo<span>Prompt</span></div>
+    <div style="font-size: 13px; color: var(--text-muted);">v1.0</div>
+</header>
 
-    <!-- Top Ad Slot -->
-    <div class="ad-zone top-ad">Ad Space (728x90 Billboard)</div>
+<div class="ad-container ad-top">Advertisement Space (Future)</div>
 
-    <div class="main-container">
-        <section>
-            <div class="editor-grid">
-                <div>
-                    <div class="box-label">1. Paste Formatted Notes</div>
-                    <div id="input" contenteditable="true" placeholder="Paste from Word/Docs here..."></div>
-                </div>
-                <div>
-                    <div class="box-label">2. Clean AI-Ready Text</div>
-                    <textarea id="output" readonly placeholder="Markdown output appears here..."></textarea>
-                </div>
+<div class="wrapper">
+    <main class="workspace">
+        <div class="editor-group">
+            <div class="box-container">
+                <label>PASTE FROM DOCS/WORD</label>
+                <div id="input-area" contenteditable="true" placeholder="Paste formatted text here..."></div>
             </div>
+            <div class="box-container">
+                <label>CLEAN RAW TEXT</label>
+                <textarea id="output-area" readonly placeholder="Output will appear here..."></textarea>
+            </div>
+        </div>
 
-            <div class="controls">
-                <button class="btn-primary" onclick="convert()">Clean & Format</button>
-                <button class="btn-copy" onclick="copyText()" id="copyBtn">Copy to Clipboard</button>
-            </div>
-            
-            <div style="margin-top:2rem; line-height:1.6; color:#4b5563;">
-                <h3>Why use PromptPrep?</h3>
-                <p>AI models like ChatGPT and Claude understand hierarchical data better when it's in Markdown format. PromptPrep preserves your indents and bullet points while stripping away hidden code that breaks chat boxes.</p>
-            </div>
+        <div class="actions">
+            <button class="btn-main" onclick="processText()">Clean & Convert</button>
+            <button class="btn-secondary" onclick="copyToClipboard()" id="copyBtn">Copy Result</button>
+        </div>
+
+        <section class="info-section">
+            <h2>Why NoteToPrompt?</h2>
+            <p>Directly pasting from Google Docs or Microsoft Word often loses nested indentation and bullet hierarchy. <strong>NoteToPrompt</strong> converts your rich text into clean Markdown format—the native language of AI models—ensuring ChatGPT or Claude understands exactly how your ideas are grouped.</p>
         </section>
+    </main>
 
-        <aside>
-            <div class="ad-zone sidebar-ad">Ad Space (300x250 Box)</div>
-            <div style="background:#eff6ff; padding:1.5rem; border-radius:8px; margin-top:1rem; border:1px solid #dbeafe;">
-                <h4 style="margin-top:0; color:#1e40af;">Pro Tip</h4>
-                <p style="font-size:13px; color:#1e40af;">Using Claude? Markdown helps Claude follow multi-step instructions 30% more accurately.</p>
-            </div>
-        </aside>
-    </div>
+    <aside class="sidebar">
+        <div style="background: #fef9c3; padding: 1rem; border-radius: 8px; font-size: 13px; border: 1px solid #fef08a;">
+            <strong>Pro Tip:</strong> Use indents to show "Child" ideas. NoteToPrompt will turn them into nested dashes for the AI.
+        </div>
+        <div class="ad-container ad-sidebar">Sidebar Ad Space</div>
+    </aside>
+</div>
 
-    <footer>
-        &copy; 2024 PromptPrep. Built for AI Power Users.
-    </footer>
+<footer>
+    &copy; 2024 NoteToPrompt.com — The essential tool for cleaner AI interactions.
+</footer>
 
-    <script>
-        const turndownService = new TurndownService({ headingStyle: 'atx', bulletListMarker: '-' });
-        const input = document.getElementById('input');
-        const output = document.getElementById('output');
-        const copyBtn = document.getElementById('copyBtn');
+<script>
+    const turndownService = new TurndownService({ 
+        headingStyle: 'atx', 
+        bulletListMarker: '-' 
+    });
 
-        function convert() {
-            const rawHTML = input.innerHTML;
-            const markdown = turndownService.turndown(rawHTML);
-            output.value = markdown;
+    const inputArea = document.getElementById('input-area');
+    const outputArea = document.getElementById('output-area');
+    const copyBtn = document.getElementById('copyBtn');
+
+    function processText() {
+        const html = inputArea.innerHTML;
+        const markdown = turndownService.turndown(html);
+        outputArea.value = markdown;
+    }
+
+    // Live update as you paste/type
+    inputArea.addEventListener('input', processText);
+
+    async function copyToClipboard() {
+        try {
+            await navigator.clipboard.writeText(outputArea.value);
+            const originalText = copyBtn.innerText;
+            copyBtn.innerText = "✓ Copied!";
+            setTimeout(() => copyBtn.innerText = originalText, 2000);
+        } catch (err) {
+            console.error('Failed to copy: ', err);
         }
+    }
+</script>
 
-        async function copyText() {
-            try {
-                await navigator.clipboard.writeText(output.value);
-                copyBtn.innerText = "Copied!";
-                copyBtn.style.background = "#dcfce7";
-                setTimeout(() => {
-                    copyBtn.innerText = "Copy to Clipboard";
-                    copyBtn.style.background = "#f3f4f6";
-                }, 2000);
-            } catch (err) {
-                alert("Failed to copy");
-            }
-        }
-
-        // Live conversion
-        input.addEventListener('input', convert);
-    </script>
 </body>
 </html>
