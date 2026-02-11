@@ -4,22 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- SEO METADATA -->
-    <title>NoteToPrompt | Convert Word & Docs to Markdown for AI</title>
-    <meta name="description" content="Free tool to convert bulleted lists from Word, Google Docs, and OneNote into clean Markdown. Optimize your context for ChatGPT, Claude, and Gemini.">
+    <!-- PRIMARY SEO METADATA -->
+    <title>NoteToPrompt | Convert Word & Docs to Markdown or Plain Text for AI</title>
+    <meta name="description" content="The fastest way to clean text for ChatGPT. Convert bulleted notes from Word, Google Docs, and OneNote into AI-ready Markdown or Plain Text. Preserve your indents for better AI reasoning.">
+    <meta name="keywords" content="note to prompt, word to markdown, google docs to markdown, clean text for chatgpt, remove formatting online, prompt engineering tools, paste word to chatgpt, plain text converter">
     
+    <!-- SOCIAL MEDIA (OPEN GRAPH) TAGS -->
+    <meta property="og:title" content="NoteToPrompt | Clean Text for ChatGPT">
+    <meta property="og:description" content="Stop fighting with formatting. Convert Word & Docs to AI-ready Markdown instantly.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://notetoprompt.com">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- SCHEMA.ORG STRUCTURED DATA (Helps Google rankings) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "NoteToPrompt",
+      "operatingSystem": "All",
+      "applicationCategory": "UtilitiesApplication",
+      "description": "Converts rich text from Word and Google Docs into clean Markdown and Plain Text for AI prompts.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
     <!-- FAVICON -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📝</text></svg>">
 
-    <!-- FONTS -->
+    <!-- FONTS & LIBRARIES -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- LIBRARIES -->
     <script src="https://unpkg.com/turndown/dist/turndown.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <style>
         :root {
+            /* Light Theme */
             --bg-body: #f1f5f9; 
             --bg-card: #ffffff;
             --text-main: #0f172a;
@@ -33,6 +57,7 @@
         }
 
         [data-theme="dark"] {
+            /* Dark Theme */
             --bg-body: #0f172a;
             --bg-card: #1e293b;
             --text-main: #f8fafc;
@@ -54,6 +79,7 @@
             transition: background 0.3s, color 0.3s;
         }
 
+        /* --- HEADER --- */
         header {
             position: sticky;
             top: 0;
@@ -81,8 +107,8 @@
             font-weight: 500;
             transition: 0.2s;
         }
-        .theme-toggle:hover { background: var(--border); color: var(--text-main); }
 
+        /* --- ADVERTISING ZONES --- */
         .ad-slot {
             background-color: var(--ad-bg);
             background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.03) 10px, rgba(0,0,0,0.03) 20px);
@@ -97,31 +123,17 @@
             letter-spacing: 0.05em;
             text-transform: uppercase;
         }
-        
         .ad-leaderboard { width: 100%; max-width: 728px; height: 90px; margin: 1rem auto 0.5rem auto; }
         .ad-mid { width: 100%; max-width: 728px; height: 90px; margin: 2rem auto; }
         .ad-sidebar { width: 300px; height: 250px; margin-bottom: 1rem; }
 
-        .hero {
-            text-align: center;
-            padding: 1rem 1rem 1.5rem 1rem;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        .hero h1 {
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin: 0 0 0.5rem 0;
-            line-height: 1.2;
-            letter-spacing: -0.02em;
-        }
+        /* --- HERO --- */
+        .hero { text-align: center; padding: 1rem 1rem 1.5rem 1rem; max-width: 700px; margin: 0 auto; }
+        .hero h1 { font-size: 1.8rem; font-weight: 800; margin: 0 0 0.5rem 0; letter-spacing: -0.02em; }
         .hero p { font-size: 1rem; color: var(--text-muted); margin: 0; }
 
-        .app-container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-        }
+        /* --- MAIN INTERFACE --- */
+        .app-container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
 
         .editor-grid {
             display: grid;
@@ -130,27 +142,18 @@
             align-items: center;
             margin-top: 0.5rem;
         }
-        
-        .flow-arrow {
-            color: var(--border);
-            font-size: 1.5rem;
-            display: flex;
-            justify-content: center;
-        }
+        .flow-arrow { color: var(--border); font-size: 1.5rem; display: flex; justify-content: center; }
 
-        @media (max-width: 768px) { 
-            .editor-grid { grid-template-columns: 1fr; } 
-            .flow-arrow { display: none; }
-        }
+        @media (max-width: 768px) { .editor-grid { grid-template-columns: 1fr; } .flow-arrow { display: none; } }
 
         .box-wrapper { display: flex; flex-direction: column; gap: 0.25rem; width: 100%; }
         .box-header { display: flex; justify-content: space-between; align-items: center; padding: 0 0.25rem; }
         .box-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); }
         .clear-btn { color: var(--primary); font-size: 0.7rem; font-weight: 600; cursor: pointer; }
 
-        /* --- STABLE RESIZABLE BOXES --- */
+        /* RESIZABLE EDITORS */
         .editor {
-            height: 400px; /* Restored Default Height */
+            height: 400px; /* Default height you liked */
             min-height: 150px;
             max-height: 1200px;
             background: var(--bg-card);
@@ -160,34 +163,22 @@
             font-size: 0.95rem;
             outline: none;
             box-shadow: var(--shadow);
-            
-            /* Vertical resizing enabled */
-            resize: vertical; 
-            overflow: auto; 
-            
-            /* Remove transform transitions to prevent resizing glitches */
-            transition: border 0.2s, background 0.3s, color 0.3s; 
+            resize: vertical; /* Enable manual resize */
+            overflow: auto;
+            transition: border 0.2s, background 0.3s, color 0.3s;
         }
         .editor:focus { border-color: var(--primary); }
-        
         #output { font-family: 'Courier New', monospace; color: var(--text-main); }
 
+        /* --- BUTTONS --- */
         .actions { display: flex; gap: 1rem; margin-top: 1.5rem; justify-content: center; }
-        .btn {
-            padding: 0.75rem 2rem;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            border: none;
-            cursor: pointer;
-            transition: transform 0.1s;
-        }
+        .btn { padding: 0.75rem 2rem; border-radius: 8px; font-weight: 600; font-size: 0.95rem; border: none; cursor: pointer; transition: transform 0.1s; }
         .btn:active { transform: scale(0.98); }
         .btn-primary { background: var(--primary); color: white; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3); }
         .btn-primary:hover { background: var(--primary-hover); }
         .btn-secondary { background: var(--bg-card); border: 1px solid var(--border); color: var(--text-main); }
-        .btn-secondary:hover { border-color: var(--text-muted); }
 
+        /* --- SEO CONTENT & SIDEBAR --- */
         .content-grid {
             display: grid;
             grid-template-columns: 1fr 300px;
@@ -196,24 +187,13 @@
             padding-top: 2rem;
             margin-bottom: 2rem;
         }
-        @media (max-width: 900px) { 
-            .content-grid { grid-template-columns: 1fr; } 
-            .sidebar { display: none; }
-        }
+        @media (max-width: 900px) { .content-grid { grid-template-columns: 1fr; } .sidebar { display: none; } }
 
         .article h2 { font-size: 1.25rem; margin-bottom: 0.75rem; letter-spacing: -0.01em; margin-top: 0; }
         .article p { color: var(--text-muted); margin-bottom: 1.25rem; font-size: 0.95rem; }
         .article ul { color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.95rem; padding-left: 1.2rem; }
-        .article li { margin-bottom: 0.4rem; }
 
-        footer {
-            text-align: center;
-            padding: 2rem;
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            border-top: 1px solid var(--border);
-            background: var(--bg-body);
-        }
+        footer { text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.8rem; border-top: 1px solid var(--border); }
     </style>
 </head>
 <body>
@@ -223,19 +203,21 @@
         <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()">🌙 Dark Mode</button>
     </header>
 
+    <!-- TOP AD ZONE -->
     <div class="ad-slot ad-leaderboard">Ad Space (Top Leaderboard)</div>
 
     <div class="app-container">
+        
         <section class="hero">
             <h1>Stop fighting with formatting.</h1>
-            <p>Paste formatted notes. Get clean Markdown for AI. Instantly.</p>
+            <p>Paste bulleted notes from Word or Docs. Get clean Markdown for AI instantly.</p>
         </section>
 
         <main>
             <div class="editor-grid">
                 <div class="box-wrapper">
                     <div class="box-header">
-                        <span class="box-label">Paste Word/Docs Here</span>
+                        <span class="box-label">Paste Formatted Text</span>
                         <span class="clear-btn" onclick="clearAll()">Clear</span>
                     </div>
                     <div id="input" class="editor" contenteditable="true" placeholder="Paste your bullets here..."></div>
@@ -257,36 +239,40 @@
             </div>
         </main>
 
+        <!-- MIDDLE AD ZONE -->
         <div class="ad-slot ad-mid">Ad Space (Middle Banner)</div>
 
         <div class="content-grid">
             <article class="article">
-                <h2>Why convert notes for AI?</h2>
+                <h2>The Fastest Way to Convert Word to Markdown</h2>
                 <p>
-                    Copying text directly from <strong>Word, Google Docs, or Notion</strong> carries invisible HTML code and broken indentation. 
-                    AI models like <strong>ChatGPT and Claude</strong> struggle to read this, leading to hallucinations or bad answers.
+                    When you copy-paste from <strong>Microsoft Word, Google Docs, or OneNote</strong> directly into AI chat boxes like ChatGPT or Claude, you often lose your list hierarchy. <strong>NoteToPrompt</strong> solves this by acting as a high-fidelity <strong>rich text to markdown converter</strong>. We strip the hidden HTML styling and replace it with clean, AI-native Markdown syntax.
                 </p>
 
-                <h2>How NoteToPrompt helps</h2>
-                <p>We strip the junk and convert content into <strong>Markdown</strong>—the native language of LLMs.</p>
+                <h2>Why Use Markdown Instead of Plain Text?</h2>
+                <p>
+                    While many users look for a <strong>plain text converter</strong> to remove formatting, <strong>Markdown</strong> is superior for Prompt Engineering. 
+                    AI models like GPT-4 and Claude 3.5 are trained on vast amounts of web data where Markdown is the standard. By using dashes (<code>-</code>) for bullets, you help the AI understand your instruction hierarchy.
+                </p>
+
+                <h2>Fixing "ChatGPT Ruined My Formatting"</h2>
+                <p>Does your pasted text look like one giant paragraph? Use our <strong>formatting remover</strong> to:</p>
                 <ul>
-                    <li><strong>Preserves Hierarchy:</strong> Keeps your nested bullets intact.</li>
-                    <li><strong>Two-Way Sync:</strong> Edit the raw text directly and watch the formatting update.</li>
-                    <li><strong>Universal:</strong> Works with all AI models.</li>
+                    <li>Preserve <strong>nested bullet points</strong> and sub-indents.</li>
+                    <li>Convert <strong>bold and italicized</strong> text into AI-readable symbols.</li>
+                    <li>Clean up <strong>hidden tokens</strong> that waste your context window.</li>
+                    <li>Prepare <strong>Google Docs for AI ingestion</strong> without manual re-typing.</li>
                 </ul>
-
-                <h2>Perfect for Prompt Engineering</h2>
-                <p>
-                    Structure is everything. Use this tool to clean your context data before pasting it into your prompt window to ensure the AI follows your instructions perfectly.
-                </p>
             </article>
 
             <aside class="sidebar">
+                <!-- SIDEBAR AD ZONE -->
                 <div class="ad-slot ad-sidebar">Ad Space (300x250)</div>
+                
                 <div style="background:var(--bg-card); padding:1rem; border:1px solid var(--border); border-radius:8px; box-shadow: var(--shadow);">
                     <h4 style="margin:0 0 0.5rem 0; font-size:0.9rem;">🔒 Secure & Private</h4>
                     <p style="margin:0; font-size:0.8rem; color:var(--text-muted);">
-                        All processing happens in your browser. Your data never leaves your device.
+                        Processing happens in your browser. Your data is never sent to a server.
                     </p>
                 </div>
             </aside>
@@ -298,25 +284,15 @@
     </footer>
 
     <script>
-        // --- CONVERSION LOGIC ---
-        const turndownService = new TurndownService({ 
-            headingStyle: 'atx', 
-            bulletListMarker: '-',
-            codeBlockStyle: 'fenced' 
-        });
-
+        // --- CONVERSION ENGINE ---
+        const turndownService = new TurndownService({ headingStyle: 'atx', bulletListMarker: '-', codeBlockStyle: 'fenced' });
         const input = document.getElementById('input');
         const output = document.getElementById('output');
         const copyBtn = document.getElementById('copyBtn');
-
         let isSyncing = false;
 
         function convert() {
             if (isSyncing) return;
-            if (!input.innerText.trim() && input.innerHTML === "") {
-                output.value = "";
-                return;
-            }
             isSyncing = true;
             output.value = turndownService.turndown(input.innerHTML);
             isSyncing = false;
@@ -332,36 +308,26 @@
         input.addEventListener('input', convert);
         output.addEventListener('input', reverseConvert);
 
-        // --- SMOOTH HEIGHT SYNC LOGIC ---
+        // --- SMOOTH HEIGHT SYNC ---
         const syncHeight = (source, target) => {
-            const height = source.style.height;
-            if (target.style.height !== height) {
-                target.style.height = height;
+            if (target.style.height !== source.style.height) {
+                target.style.height = source.style.height;
             }
         };
 
-        // Listen for mouseup and mousemove on the boxes to detect resizing
-        input.addEventListener('mousedown', () => {
-            const onMove = () => syncHeight(input, output);
-            document.addEventListener('mousemove', onMove);
-            document.addEventListener('mouseup', () => {
-                document.removeEventListener('mousemove', onMove);
-            }, { once: true });
-        });
+        const setupResize = (source, target) => {
+            source.addEventListener('mousedown', () => {
+                const onMove = () => syncHeight(source, target);
+                document.addEventListener('mousemove', onMove);
+                document.addEventListener('mouseup', () => document.removeEventListener('mousemove', onMove), { once: true });
+            });
+        };
 
-        output.addEventListener('mousedown', () => {
-            const onMove = () => syncHeight(output, input);
-            document.addEventListener('mousemove', onMove);
-            document.addEventListener('mouseup', () => {
-                document.removeEventListener('mousemove', onMove);
-            }, { once: true });
-        });
+        setupResize(input, output);
+        setupResize(output, input);
 
-        function clearAll() {
-            input.innerHTML = "";
-            output.value = "";
-            input.focus();
-        }
+        // --- UTILS ---
+        function clearAll() { input.innerHTML = ""; output.value = ""; input.focus(); }
 
         async function copyText() {
             if (!output.value) return;
@@ -373,23 +339,20 @@
             } catch (err) { console.error('Failed to copy'); }
         }
 
-        // --- DARK MODE & FOOTER ---
+        // --- THEME & DATE ---
         const html = document.documentElement;
         const themeBtn = document.getElementById('themeBtn');
-        
         function toggleTheme() {
-            const current = html.getAttribute('data-theme');
-            const next = current === 'light' ? 'dark' : 'light';
+            const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
             html.setAttribute('data-theme', next);
             themeBtn.innerText = next === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode';
             localStorage.setItem('theme', next);
         }
-
         if (localStorage.getItem('theme')) {
-            html.setAttribute('data-theme', localStorage.getItem('theme'));
-            themeBtn.innerText = localStorage.getItem('theme') === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode';
+            const saved = localStorage.getItem('theme');
+            html.setAttribute('data-theme', saved);
+            themeBtn.innerText = saved === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode';
         }
-
         document.getElementById('current-year').textContent = new Date().getFullYear();
     </script>
 </body>
