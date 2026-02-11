@@ -1,209 +1,372 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- SEO Meta Tags -->
-    <title>NoteToPrompt | Convert Formatted Notes to AI-Ready Text</title>
-    <meta name="description" content="Easily convert bulleted or indented notes from Google Docs and Word into clean Markdown for ChatGPT, Claude, and Gemini. Preserve your structure for better AI comprehension.">
-    <meta name="keywords" content="note to prompt, convert notes to chatgpt, formatted text to markdown, prompt engineering tool">
+    <!-- SEO METADATA -->
+    <title>NoteToPrompt | Convert Word & Docs to Markdown for AI</title>
+    <meta name="description" content="Free tool to convert bulleted lists from Word, Google Docs, and OneNote into clean Markdown. Optimize your context for ChatGPT, Claude, and Gemini.">
     
-    <!-- Modern Typography -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- FAVICON -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📝</text></svg>">
+
+    <!-- FONTS -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Turndown Library for HTML-to-Markdown conversion -->
+    <!-- LIBRARY -->
     <script src="https://unpkg.com/turndown/dist/turndown.js"></script>
 
     <style>
         :root {
-            --primary: #000000;
-            --accent: #2563eb;
-            --bg: #ffffff;
-            --secondary-bg: #f9fafb;
-            --border: #e5e7eb;
-            --text-main: #111827;
-            --text-muted: #6b7280;
+            /* Light Theme */
+            --bg-body: #f1f5f9; /* Slightly darker for better contrast */
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --border: #cbd5e1;
+            --ad-bg: #e2e8f0;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --glass: rgba(255, 255, 255, 0.9);
         }
 
-        * { box-sizing: border-box; }
-        body { 
-            font-family: 'Inter', -apple-system, sans-serif; 
-            background-color: var(--bg); 
-            color: var(--text-main); 
-            margin: 0; 
+        [data-theme="dark"] {
+            /* Dark Theme */
+            --bg-body: #0f172a;
+            --bg-card: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #6366f1;
+            --primary-hover: #818cf8;
+            --border: #334155;
+            --ad-bg: #162032;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            --glass: rgba(15, 23, 42, 0.9);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            margin: 0;
             line-height: 1.5;
+            transition: background 0.3s, color 0.3s;
         }
 
-        /* Ad Sections - Pre-configured for future scripts */
-        .ad-container {
-            background: #fafafa;
-            border: 1px dashed #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #999;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin: 20px auto;
-        }
-        .ad-top { width: 100%; max-width: 728px; height: 90px; }
-        .ad-sidebar { width: 100%; height: 250px; margin-top: 20px; }
-
+        /* --- HEADER --- */
         header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+            background: var(--glass);
             border-bottom: 1px solid var(--border);
-            padding: 1.25rem 2rem;
+            padding: 0.75rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .logo { font-weight: 700; font-size: 1.25rem; letter-spacing: -0.5px; }
-        .logo span { color: var(--accent); }
+        .logo { font-weight: 800; font-size: 1.25rem; text-decoration: none; color: var(--text-main); letter-spacing: -0.02em; }
+        .logo span { color: var(--primary); }
 
-        .wrapper {
-            max-width: 1200px;
+        .theme-toggle {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 5px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+        .theme-toggle:hover { background: var(--border); color: var(--text-main); }
+
+        /* --- ADVERTISING ZONES --- */
+        .ad-slot {
+            background-color: var(--ad-bg);
+            /* Striped pattern to look professional */
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.03) 10px, rgba(0,0,0,0.03) 20px);
+            border: 1px dashed var(--border);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        
+        .ad-leaderboard { width: 100%; max-width: 728px; height: 90px; margin: 1rem auto 0.5rem auto; }
+        .ad-mid { width: 100%; max-width: 728px; height: 90px; margin: 2rem auto; }
+        .ad-sidebar { width: 300px; height: 250px; margin-bottom: 1rem; }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            text-align: center;
+            padding: 1rem 1rem 1.5rem 1rem; /* Tighter padding */
+            max-width: 700px;
             margin: 0 auto;
-            padding: 2rem;
-            display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 2.5rem;
+        }
+        .hero h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin: 0 0 0.5rem 0;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+        .hero p { font-size: 1rem; color: var(--text-muted); margin: 0; }
+
+        /* --- MAIN GRID --- */
+        .app-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
         }
 
-        @media (max-width: 1024px) {
-            .wrapper { grid-template-columns: 1fr; }
+        .editor-grid {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr; /* Middle column for arrow */
+            gap: 1rem;
+            align-items: center;
+            margin-top: 0.5rem;
+        }
+        
+        /* The Arrow Icon */
+        .flow-arrow {
+            color: var(--border);
+            font-size: 1.5rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) { 
+            .editor-grid { grid-template-columns: 1fr; } 
+            .flow-arrow { display: none; } /* Hide arrow on mobile */
+        }
+
+        .box-wrapper { display: flex; flex-direction: column; gap: 0.25rem; width: 100%; }
+        
+        .box-header { display: flex; justify-content: space-between; align-items: center; padding: 0 0.25rem; }
+        .box-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); }
+        .clear-btn { color: var(--primary); font-size: 0.7rem; font-weight: 600; cursor: pointer; }
+
+        .editor {
+            height: 400px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px; /* Softer corners */
+            padding: 1.25rem;
+            font-size: 0.95rem;
+            overflow-y: auto;
+            outline: none;
+            box-shadow: var(--shadow); /* Depth added here */
+            transition: border 0.2s, transform 0.2s;
+        }
+        .editor:focus { border-color: var(--primary); transform: translateY(-2px); }
+        
+        #output { font-family: 'Courier New', monospace; resize: none; color: var(--text-main); }
+
+        /* --- BUTTONS --- */
+        .actions { display: flex; gap: 1rem; margin-top: 1.5rem; justify-content: center; }
+        .btn {
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+        .btn:active { transform: scale(0.98); }
+        .btn-primary { background: var(--primary); color: white; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3); }
+        .btn-primary:hover { background: var(--primary-hover); }
+        .btn-secondary { background: var(--bg-card); border: 1px solid var(--border); color: var(--text-main); }
+        .btn-secondary:hover { border-color: var(--text-muted); }
+
+        /* --- CONTENT & SIDEBAR SECTION --- */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 3rem;
+            border-top: 1px solid var(--border);
+            padding-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        @media (max-width: 900px) { 
+            .content-grid { grid-template-columns: 1fr; } 
             .sidebar { display: none; }
         }
 
-        .workspace { display: flex; flex-direction: column; gap: 1.5rem; }
+        .article h2 { font-size: 1.25rem; margin-bottom: 0.75rem; letter-spacing: -0.01em; margin-top: 0; }
+        .article p { color: var(--text-muted); margin-bottom: 1.25rem; font-size: 0.95rem; }
+        .article ul { color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.95rem; padding-left: 1.2rem; }
+        .article li { margin-bottom: 0.4rem; }
 
-        .editor-group {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border);
+            background: var(--bg-body);
         }
-
-        @media (max-width: 768px) {
-            .editor-group { grid-template-columns: 1fr; }
-        }
-
-        .box-container { display: flex; flex-direction: column; gap: 0.5rem; }
-        label { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); }
-
-        #input-area, #output-area {
-            height: 450px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 1.25rem;
-            font-size: 14px;
-            background: white;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        #input-area:focus { border-color: var(--accent); }
-        #input-area { overflow-y: auto; }
-        #output-area { background-color: var(--secondary-bg); color: #333; font-family: 'Courier New', monospace; resize: none; }
-
-        .actions { display: flex; gap: 1rem; }
-        button {
-            padding: 0.8rem 1.5rem;
-            border-radius: 6px;
-            font-weight: 500;
-            cursor: pointer;
-            font-size: 14px;
-            border: 1px solid transparent;
-            transition: all 0.2s;
-        }
-
-        .btn-main { background: var(--primary); color: white; }
-        .btn-main:hover { background: #333; }
-        .btn-secondary { background: white; border: 1px solid var(--border); color: var(--text-main); }
-        .btn-secondary:hover { background: var(--secondary-bg); }
-
-        .info-section { margin-top: 3rem; border-top: 1px solid var(--border); padding-top: 2rem; }
-        .info-section h2 { font-size: 1.5rem; margin-bottom: 1rem; }
-        .info-section p { color: var(--text-muted); max-width: 700px; }
-
-        footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; font-size: 0.85rem; color: var(--text-muted); }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="logo">NoteTo<span>Prompt</span></div>
-    <div style="font-size: 13px; color: var(--text-muted);">v1.0</div>
-</header>
+    <header>
+        <a href="/" class="logo">NoteTo<span>Prompt</span></a>
+        <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()">🌙 Dark Mode</button>
+    </header>
 
-<div class="ad-container ad-top">Advertisement Space (Future)</div>
+    <!-- AD ZONE 1: TOP LEADERBOARD -->
+    <div class="ad-slot ad-leaderboard">Ad Space (Top Leaderboard)</div>
 
-<div class="wrapper">
-    <main class="workspace">
-        <div class="editor-group">
-            <div class="box-container">
-                <label>PASTE FROM DOCS/WORD</label>
-                <div id="input-area" contenteditable="true" placeholder="Paste formatted text here..."></div>
-            </div>
-            <div class="box-container">
-                <label>CLEAN RAW TEXT</label>
-                <textarea id="output-area" readonly placeholder="Output will appear here..."></textarea>
-            </div>
-        </div>
-
-        <div class="actions">
-            <button class="btn-main" onclick="processText()">Clean & Convert</button>
-            <button class="btn-secondary" onclick="copyToClipboard()" id="copyBtn">Copy Result</button>
-        </div>
-
-        <section class="info-section">
-            <h2>Why NoteToPrompt?</h2>
-            <p>Directly pasting from Google Docs or Microsoft Word often loses nested indentation and bullet hierarchy. <strong>NoteToPrompt</strong> converts your rich text into clean Markdown format—the native language of AI models—ensuring ChatGPT or Claude understands exactly how your ideas are grouped.</p>
+    <div class="app-container">
+        
+        <!-- HERO -->
+        <section class="hero">
+            <h1>Stop fighting with formatting.</h1>
+            <p>Paste formatted notes. Get clean Markdown for AI. Instantly.</p>
         </section>
-    </main>
 
-    <aside class="sidebar">
-        <div style="background: #fef9c3; padding: 1rem; border-radius: 8px; font-size: 13px; border: 1px solid #fef08a;">
-            <strong>Pro Tip:</strong> Use indents to show "Child" ideas. NoteToPrompt will turn them into nested dashes for the AI.
+        <!-- APP INTERFACE -->
+        <main>
+            <div class="editor-grid">
+                <!-- Input Box -->
+                <div class="box-wrapper">
+                    <div class="box-header">
+                        <span class="box-label">Paste Word/Docs Here</span>
+                        <span class="clear-btn" onclick="clearAll()">Clear</span>
+                    </div>
+                    <div id="input" class="editor" contenteditable="true" placeholder="Paste your bullets here..."></div>
+                </div>
+
+                <!-- Visual Arrow for Desktop -->
+                <div class="flow-arrow">→</div>
+
+                <!-- Output Box -->
+                <div class="box-wrapper">
+                    <div class="box-header">
+                        <span class="box-label">AI-Ready Markdown</span>
+                    </div>
+                    <textarea id="output" class="editor" readonly placeholder="Result appears here..."></textarea>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="btn btn-primary" onclick="convert()">✨ Convert Text</button>
+                <button class="btn btn-secondary" id="copyBtn" onclick="copyText()">Copy to Clipboard</button>
+            </div>
+        </main>
+
+        <!-- AD ZONE 2: MIDDLE BANNER -->
+        <div class="ad-slot ad-mid">Ad Space (Middle Banner)</div>
+
+        <!-- SEO CONTENT & SIDEBAR GRID -->
+        <div class="content-grid">
+            
+            <!-- LEFT: SEO TEXT -->
+            <article class="article">
+                <h2>Why convert notes for AI?</h2>
+                <p>
+                    Copying text directly from <strong>Word, Google Docs, or Notion</strong> carries invisible HTML code and broken indentation. 
+                    AI models like <strong>ChatGPT and Claude</strong> struggle to read this, leading to hallucinations or bad answers.
+                </p>
+
+                <h2>How NoteToPrompt helps</h2>
+                <p>We strip the junk and convert content into <strong>Markdown</strong>—the native language of LLMs.</p>
+                <ul>
+                    <li><strong>Preserves Hierarchy:</strong> Keeps your nested bullets intact.</li>
+                    <li><strong>Lightweight:</strong> Reduces token count.</li>
+                    <li><strong>Universal:</strong> Works with all AI models.</li>
+                </ul>
+
+                <h2>Perfect for Prompt Engineering</h2>
+                <p>
+                    Structure is everything. Use this tool to clean your context data before pasting it into your prompt window to ensure the AI follows your instructions perfectly.
+                </p>
+            </article>
+
+            <!-- RIGHT: STICKY SIDEBAR -->
+            <aside class="sidebar">
+                <!-- AD ZONE 3: RECTANGLE -->
+                <div class="ad-slot ad-sidebar">Ad Space (300x250)</div>
+                
+                <div style="background:var(--bg-card); padding:1rem; border:1px solid var(--border); border-radius:8px; box-shadow: var(--shadow);">
+                    <h4 style="margin:0 0 0.5rem 0; font-size:0.9rem;">🔒 Secure & Private</h4>
+                    <p style="margin:0; font-size:0.8rem; color:var(--text-muted);">
+                        All processing happens in your browser. Your data never leaves your device.
+                    </p>
+                </div>
+            </aside>
+
         </div>
-        <div class="ad-container ad-sidebar">Sidebar Ad Space</div>
-    </aside>
-</div>
+    </div>
 
-<footer>
-    &copy; 2024 NoteToPrompt.com — The essential tool for cleaner AI interactions.
-</footer>
+    <footer>
+        &copy; 2024 NoteToPrompt.com • Optimized for Prompt Engineering
+    </footer>
 
-<script>
-    const turndownService = new TurndownService({ 
-        headingStyle: 'atx', 
-        bulletListMarker: '-' 
-    });
+    <script>
+        // --- LOGIC ---
+        const turndownService = new TurndownService({ 
+            headingStyle: 'atx', 
+            bulletListMarker: '-',
+            codeBlockStyle: 'fenced' 
+        });
 
-    const inputArea = document.getElementById('input-area');
-    const outputArea = document.getElementById('output-area');
-    const copyBtn = document.getElementById('copyBtn');
+        const input = document.getElementById('input');
+        const output = document.getElementById('output');
+        const copyBtn = document.getElementById('copyBtn');
 
-    function processText() {
-        const html = inputArea.innerHTML;
-        const markdown = turndownService.turndown(html);
-        outputArea.value = markdown;
-    }
-
-    // Live update as you paste/type
-    inputArea.addEventListener('input', processText);
-
-    async function copyToClipboard() {
-        try {
-            await navigator.clipboard.writeText(outputArea.value);
-            const originalText = copyBtn.innerText;
-            copyBtn.innerText = "✓ Copied!";
-            setTimeout(() => copyBtn.innerText = originalText, 2000);
-        } catch (err) {
-            console.error('Failed to copy: ', err);
+        function convert() {
+            if (!input.innerText.trim()) return;
+            const markdown = turndownService.turndown(input.innerHTML);
+            output.value = markdown;
         }
-    }
-</script>
+        
+        input.addEventListener('input', convert);
 
+        function clearAll() {
+            input.innerHTML = "";
+            output.value = "";
+            input.focus();
+        }
+
+        async function copyText() {
+            if (!output.value) return;
+            try {
+                await navigator.clipboard.writeText(output.value);
+                const originalText = copyBtn.innerText;
+                copyBtn.innerText = "✓ Copied!";
+                setTimeout(() => { copyBtn.innerText = originalText; }, 2000);
+            } catch (err) { console.error('Failed to copy'); }
+        }
+
+        // --- DARK MODE ---
+        const html = document.documentElement;
+        const themeBtn = document.getElementById('themeBtn');
+        
+        function toggleTheme() {
+            const current = html.getAttribute('data-theme');
+            const next = current === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', next);
+            themeBtn.innerText = next === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode';
+            localStorage.setItem('theme', next);
+        }
+
+        if (localStorage.getItem('theme')) {
+            html.setAttribute('data-theme', localStorage.getItem('theme'));
+            themeBtn.innerText = localStorage.getItem('theme') === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode';
+        }
+    </script>
 </body>
 </html>
