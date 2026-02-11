@@ -312,7 +312,7 @@
     </div>
 
     <footer>
-        &copy; 2024 NoteToPrompt.com • Optimized for Prompt Engineering
+        &copy; <span id="current-year"></span> NoteToPrompt.com • Optimized for Prompt Engineering
     </footer>
 
     <script>
@@ -367,6 +367,9 @@
             html.setAttribute('data-theme', localStorage.getItem('theme'));
             themeBtn.innerText = localStorage.getItem('theme') === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode';
         }
+
+        // Automatically set the current year in the footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
     </script>
 </body>
 </html>
