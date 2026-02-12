@@ -174,5 +174,59 @@
         if (localStorage.getItem('theme')) { const saved = localStorage.getItem('theme'); html.setAttribute('data-theme', saved); themeBtn.innerText = saved === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode'; }
         document.getElementById('current-year').textContent = new Date().getFullYear();
     </script>
+
+    <script>
+        // 1. Define your keyword targets
+        const seoData = {
+            "word": {
+                title: "Word to Markdown Converter for AI | NoteToPrompt",
+                h1: "Convert Word to AI-Ready Markdown",
+                desc: "The fastest way to clean Microsoft Word notes for ChatGPT and Claude prompts."
+            },
+            "google-docs": {
+                title: "Google Docs to Markdown for ChatGPT | NoteToPrompt",
+                h1: "Convert Google Docs to AI Markdown",
+                desc: "Prep your Google Docs for AI context windows without losing your bulleted structure."
+            },
+            "onenote": {
+                title: "OneNote to Markdown for AI Prompts | NoteToPrompt",
+                h1: "Clean OneNote Formatting for AI",
+                desc: "Easily strip OneNote styles and convert to clean Markdown for better AI reasoning."
+            },
+            "notion": {
+                title: "Notion to Markdown for ChatGPT | NoteToPrompt",
+                h1: "Convert Notion Blocks to AI Markdown",
+                desc: "Clean up Notion exports and pastes to ensure your AI follows your page hierarchy."
+            }
+        };
+    
+        // 2. Logic to swap content
+        function applyProgrammaticSEO() {
+            const params = new URLSearchParams(window.location.search);
+            const tool = params.get('ref'); // Looks for ?ref=word
+    
+            if (tool && seoData[tool]) {
+                const data = seoData[tool];
+                
+                // Update Page Title
+                document.title = data.title;
+                
+                // Update H1 Header
+                const h1Element = document.querySelector('.hero h1');
+                if (h1Element) h1Element.innerText = data.h1;
+                
+                // Update Meta Description (for Googlebot)
+                const metaDesc = document.querySelector('meta[name="description"]');
+                if (metaDesc) metaDesc.setAttribute("content", data.desc);
+                
+                // Optional: Update OG tags for social sharing
+                const ogTitle = document.querySelector('meta[property="og:title"]');
+                if (ogTitle) ogTitle.setAttribute("content", data.title);
+            }
+        }
+    
+        // Run on load
+        window.addEventListener('DOMContentLoaded', applyProgrammaticSEO);
+    </script>
 </body>
 </html>
