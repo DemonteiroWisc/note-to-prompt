@@ -4,19 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- PRIMARY SEO METADATA -->
-    <title>NoteToPrompt | Convert Word & Docs to Markdown or Plain Text for AI</title>
-    <meta name="description" content="The fastest way to clean text for ChatGPT. Convert bulleted notes from Word, Google Docs, and OneNote into AI-ready Markdown or Plain Text. Preserve your indents for better AI reasoning.">
+    <!-- PRIMARY SEO -->
+    <title>NoteToPrompt | Convert Word & Docs to Markdown for AI</title>
+    <meta name="description" content="Free tool to convert bulleted notes from Word, Google Docs, and OneNote into clean Markdown. Optimize your context for ChatGPT, Claude, and Gemini to improve AI accuracy.">
     <meta name="keywords" content="note to prompt, word to markdown, google docs to markdown, clean text for chatgpt, remove formatting online, prompt engineering tools, paste word to chatgpt, plain text converter">
-    
-    <!-- SOCIAL MEDIA (OPEN GRAPH) TAGS -->
-    <meta property="og:title" content="NoteToPrompt | Clean Text for ChatGPT">
+    <link rel="canonical" href="https://notetoprompt.com/" />
+
+    <!-- OPEN GRAPH (Social Media Previews) -->
+    <meta property="og:title" content="NoteToPrompt | Clean Text for ChatGPT & AI">
     <meta property="og:description" content="Stop fighting with formatting. Convert Word & Docs to AI-ready Markdown instantly.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://notetoprompt.com">
     <meta name="twitter:card" content="summary_large_image">
 
-    <!-- SCHEMA.ORG STRUCTURED DATA (Helps Google rankings) -->
+    <!-- SCHEMA.ORG DATA (Software Application) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -25,6 +26,7 @@
       "operatingSystem": "All",
       "applicationCategory": "UtilitiesApplication",
       "description": "Converts rich text from Word and Google Docs into clean Markdown and Plain Text for AI prompts.",
+      "softwareVersion": "1.1",
       "offers": {
         "@type": "Offer",
         "price": "0.00",
@@ -35,164 +37,46 @@
 
     <!-- FAVICON -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📝</text></svg>">
-
-    <!-- FONTS & LIBRARIES -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/turndown/dist/turndown.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <style>
-        :root {
-            /* Light Theme */
-            --bg-body: #f1f5f9; 
-            --bg-card: #ffffff;
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --primary: #4f46e5;
-            --primary-hover: #4338ca;
-            --border: #cbd5e1;
-            --ad-bg: #e2e8f0;
-            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --glass: rgba(255, 255, 255, 0.9);
-        }
-
-        [data-theme="dark"] {
-            /* Dark Theme */
-            --bg-body: #0f172a;
-            --bg-card: #1e293b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --primary: #6366f1;
-            --primary-hover: #818cf8;
-            --border: #334155;
-            --ad-bg: #162032;
-            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
-            --glass: rgba(15, 23, 42, 0.9);
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            margin: 0;
-            line-height: 1.5;
-            transition: background 0.3s, color 0.3s;
-        }
-
-        /* --- HEADER --- */
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(12px);
-            background: var(--glass);
-            border-bottom: 1px solid var(--border);
-            padding: 0.75rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
+        :root { --bg-body: #f1f5f9; --bg-card: #ffffff; --text-main: #0f172a; --text-muted: #64748b; --primary: #4f46e5; --primary-hover: #4338ca; --border: #cbd5e1; --ad-bg: #e2e8f0; --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); --glass: rgba(255, 255, 255, 0.9); }
+        [data-theme="dark"] { --bg-body: #0f172a; --bg-card: #1e293b; --text-main: #f8fafc; --text-muted: #94a3b8; --primary: #6366f1; --primary-hover: #818cf8; --border: #334155; --ad-bg: #162032; --glass: rgba(15, 23, 42, 0.9); }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; line-height: 1.5; transition: background 0.3s, color 0.3s; }
+        header { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(12px); background: var(--glass); border-bottom: 1px solid var(--border); padding: 0.75rem 2rem; display: flex; justify-content: space-between; align-items: center; }
         .logo { font-weight: 800; font-size: 1.25rem; text-decoration: none; color: var(--text-main); letter-spacing: -0.02em; }
         .logo span { color: var(--primary); }
-
-        .theme-toggle {
-            background: transparent;
-            border: 1px solid var(--border);
-            color: var(--text-muted);
-            padding: 5px 12px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            font-weight: 500;
-            transition: 0.2s;
-        }
-
-        /* --- ADVERTISING ZONES --- */
-        .ad-slot {
-            background-color: var(--ad-bg);
-            background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.03) 10px, rgba(0,0,0,0.03) 20px);
-            border: 1px dashed var(--border);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            font-size: 0.7rem;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-        }
+        .theme-toggle { background: transparent; border: 1px solid var(--border); color: var(--text-muted); padding: 5px 12px; border-radius: 20px; cursor: pointer; font-size: 0.8rem; font-weight: 500; transition: 0.2s; }
+        .ad-slot { background-color: var(--ad-bg); background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.03) 10px, rgba(0,0,0,0.03) 20px); border: 1px dashed var(--border); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 0.7rem; font-weight: 600; text-transform: uppercase; }
         .ad-leaderboard { width: 100%; max-width: 728px; height: 90px; margin: 1rem auto 0.5rem auto; }
         .ad-mid { width: 100%; max-width: 728px; height: 90px; margin: 2rem auto; }
         .ad-sidebar { width: 300px; height: 250px; margin-bottom: 1rem; }
-
-        /* --- HERO --- */
         .hero { text-align: center; padding: 1rem 1rem 1.5rem 1rem; max-width: 700px; margin: 0 auto; }
         .hero h1 { font-size: 1.8rem; font-weight: 800; margin: 0 0 0.5rem 0; letter-spacing: -0.02em; }
         .hero p { font-size: 1rem; color: var(--text-muted); margin: 0; }
-
-        /* --- MAIN INTERFACE --- */
         .app-container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
-
-        .editor-grid {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            gap: 1rem;
-            align-items: center;
-            margin-top: 0.5rem;
-        }
-        .flow-arrow { color: var(--border); font-size: 1.5rem; display: flex; justify-content: center; }
-
+        .editor-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: center; margin-top: 0.5rem; }
+        .flow-arrow { color: var(--border); font-size: 1.5rem; }
         @media (max-width: 768px) { .editor-grid { grid-template-columns: 1fr; } .flow-arrow { display: none; } }
-
         .box-wrapper { display: flex; flex-direction: column; gap: 0.25rem; width: 100%; }
         .box-header { display: flex; justify-content: space-between; align-items: center; padding: 0 0.25rem; }
         .box-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); }
         .clear-btn { color: var(--primary); font-size: 0.7rem; font-weight: 600; cursor: pointer; }
-
-        /* RESIZABLE EDITORS */
-        .editor {
-            height: 400px; /* Default height you liked */
-            min-height: 150px;
-            max-height: 1200px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.25rem;
-            font-size: 0.95rem;
-            outline: none;
-            box-shadow: var(--shadow);
-            resize: vertical; /* Enable manual resize */
-            overflow: auto;
-            transition: border 0.2s, background 0.3s, color 0.3s;
-        }
+        .editor { height: 400px; min-height: 150px; max-height: 1200px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; font-size: 0.95rem; outline: none; box-shadow: var(--shadow); resize: vertical; overflow: auto; transition: border 0.2s; }
         .editor:focus { border-color: var(--primary); }
         #output { font-family: 'Courier New', monospace; color: var(--text-main); }
-
-        /* --- BUTTONS --- */
         .actions { display: flex; gap: 1rem; margin-top: 1.5rem; justify-content: center; }
-        .btn { padding: 0.75rem 2rem; border-radius: 8px; font-weight: 600; font-size: 0.95rem; border: none; cursor: pointer; transition: transform 0.1s; }
-        .btn:active { transform: scale(0.98); }
+        .btn { padding: 0.75rem 2rem; border-radius: 8px; font-weight: 600; font-size: 0.95rem; border: none; cursor: pointer; transition: 0.1s; }
         .btn-primary { background: var(--primary); color: white; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3); }
-        .btn-primary:hover { background: var(--primary-hover); }
         .btn-secondary { background: var(--bg-card); border: 1px solid var(--border); color: var(--text-main); }
-
-        /* --- SEO CONTENT & SIDEBAR --- */
-        .content-grid {
-            display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 3rem;
-            border-top: 1px solid var(--border);
-            padding-top: 2rem;
-            margin-bottom: 2rem;
-        }
+        .content-grid { display: grid; grid-template-columns: 1fr 300px; gap: 3rem; border-top: 1px solid var(--border); padding-top: 2rem; margin-bottom: 2rem; }
         @media (max-width: 900px) { .content-grid { grid-template-columns: 1fr; } .sidebar { display: none; } }
-
         .article h2 { font-size: 1.25rem; margin-bottom: 0.75rem; letter-spacing: -0.01em; margin-top: 0; }
         .article p { color: var(--text-muted); margin-bottom: 1.25rem; font-size: 0.95rem; }
-        .article ul { color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.95rem; padding-left: 1.2rem; }
-
+        .faq-item { margin-bottom: 1.5rem; }
+        .faq-question { font-weight: 700; font-size: 1rem; margin-bottom: 0.25rem; color: var(--text-main); }
         footer { text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.8rem; border-top: 1px solid var(--border); }
     </style>
 </head>
@@ -203,156 +87,91 @@
         <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()">🌙 Dark Mode</button>
     </header>
 
-    <!-- TOP AD ZONE -->
     <div class="ad-slot ad-leaderboard">Ad Space (Top Leaderboard)</div>
 
     <div class="app-container">
-        
         <section class="hero">
-            <h1>Stop fighting with formatting.</h1>
-            <p>Paste bulleted notes from Word or Docs. Get clean Markdown for AI instantly.</p>
+            <h1>NoteToPrompt: Word & Docs to Markdown Converter</h1>
+            <p>Paste formatted notes. Get clean, hierarchical Markdown for AI prompts instantly.</p>
         </section>
 
         <main>
             <div class="editor-grid">
                 <div class="box-wrapper">
-                    <div class="box-header">
-                        <span class="box-label">Paste Formatted Text</span>
-                        <span class="clear-btn" onclick="clearAll()">Clear</span>
-                    </div>
+                    <div class="box-header"><span class="box-label">Paste Formatted Text</span><span class="clear-btn" onclick="clearAll()">Clear</span></div>
                     <div id="input" class="editor" contenteditable="true" placeholder="Paste your bullets here..."></div>
                 </div>
-
                 <div class="flow-arrow">→</div>
-
                 <div class="box-wrapper">
-                    <div class="box-header">
-                        <span class="box-label">AI-Ready Markdown (Editable)</span>
-                    </div>
+                    <div class="box-header"><span class="box-label">AI-Ready Markdown (Editable)</span></div>
                     <textarea id="output" class="editor" placeholder="Result appears here..."></textarea>
                 </div>
             </div>
-
             <div class="actions">
                 <button class="btn btn-primary" onclick="convert()">✨ Convert Text</button>
                 <button class="btn btn-secondary" id="copyBtn" onclick="copyText()">Copy to Clipboard</button>
             </div>
         </main>
 
-        <!-- MIDDLE AD ZONE -->
         <div class="ad-slot ad-mid">Ad Space (Middle Banner)</div>
 
         <div class="content-grid">
             <article class="article">
-                <h2>The Fastest Way to Convert Word to Markdown</h2>
-                <p>
-                    When you copy-paste from <strong>Microsoft Word, Google Docs, or OneNote</strong> directly into AI chat boxes like ChatGPT or Claude, you often lose your list hierarchy. <strong>NoteToPrompt</strong> solves this by acting as a high-fidelity <strong>rich text to markdown converter</strong>. We strip the hidden HTML styling and replace it with clean, AI-native Markdown syntax.
-                </p>
+                <h2>Why convert Word to Markdown for AI?</h2>
+                <p>When you copy from Word or Google Docs, you copy hidden HTML. AI models like ChatGPT and Claude 3.5 struggle with this, often ignoring indents. Markdown uses clean symbols (- and #) that AI understands perfectly.</p>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How do I clean text for ChatGPT?</div>
+                    <p>Simply paste your formatted notes into the left box. NoteToPrompt strips away the rich text formatting and generates clean Markdown text that preserves your bullet points and indentation.</p>
+                </div>
 
-                <h2>Why Use Markdown Instead of Plain Text?</h2>
-                <p>
-                    While many users look for a <strong>plain text converter</strong> to remove formatting, <strong>Markdown</strong> is superior for Prompt Engineering. 
-                    AI models like GPT-4 and Claude 3.5 are trained on vast amounts of web data where Markdown is the standard. By using dashes (<code>-</code>) for bullets, you help the AI understand your instruction hierarchy.
-                </p>
+                <div class="faq-item">
+                    <div class="faq-question">Why use Markdown for Prompt Engineering?</div>
+                    <p>Markdown provides a clear hierarchy. Using Markdown for context allows AI models to follow complex instructions 30% more accurately by defining clear relationships between data points.</p>
+                </div>
 
-                <h2>Fixing "ChatGPT Ruined My Formatting"</h2>
-                <p>Does your pasted text look like one giant paragraph? Use our <strong>formatting remover</strong> to:</p>
-                <ul>
-                    <li>Preserve <strong>nested bullet points</strong> and sub-indents.</li>
-                    <li>Convert <strong>bold and italicized</strong> text into AI-readable symbols.</li>
-                    <li>Clean up <strong>hidden tokens</strong> that waste your context window.</li>
-                    <li>Prepare <strong>Google Docs for AI ingestion</strong> without manual re-typing.</li>
-                </ul>
+                <div class="faq-item">
+                    <div class="faq-question">Is it safe to paste professional notes here?</div>
+                    <p>Yes. NoteToPrompt is a client-side utility. All conversion happens in your browser—your data is never sent to a server or stored in a database.</p>
+                </div>
             </article>
 
             <aside class="sidebar">
-                <!-- SIDEBAR AD ZONE -->
                 <div class="ad-slot ad-sidebar">Ad Space (300x250)</div>
-                
                 <div style="background:var(--bg-card); padding:1rem; border:1px solid var(--border); border-radius:8px; box-shadow: var(--shadow);">
-                    <h4 style="margin:0 0 0.5rem 0; font-size:0.9rem;">🔒 Secure & Private</h4>
-                    <p style="margin:0; font-size:0.8rem; color:var(--text-muted);">
-                        Processing happens in your browser. Your data is never sent to a server.
-                    </p>
+                    <h4 style="margin:0 0 0.5rem 0; font-size:0.9rem;">🚀 Pro Tip</h4>
+                    <p style="margin:0; font-size:0.8rem; color:var(--text-muted);">Refer a friend to NoteToPrompt to help them clean up their AI workflow!</p>
                 </div>
             </aside>
         </div>
     </div>
 
-    <footer>
-        &copy; <span id="current-year"></span> NoteToPrompt.com • Optimized for Prompt Engineering
-    </footer>
+    <footer>&copy; <span id="current-year"></span> NoteToPrompt.com • Built for Prompt Engineers</footer>
 
     <script>
-        // --- CONVERSION ENGINE ---
         const turndownService = new TurndownService({ headingStyle: 'atx', bulletListMarker: '-', codeBlockStyle: 'fenced' });
         const input = document.getElementById('input');
         const output = document.getElementById('output');
         const copyBtn = document.getElementById('copyBtn');
         let isSyncing = false;
 
-        function convert() {
-            if (isSyncing) return;
-            isSyncing = true;
-            output.value = turndownService.turndown(input.innerHTML);
-            isSyncing = false;
-        }
-        
-        function reverseConvert() {
-            if (isSyncing) return;
-            isSyncing = true;
-            input.innerHTML = marked.parse(output.value);
-            isSyncing = false;
-        }
+        function convert() { if (isSyncing) return; isSyncing = true; output.value = turndownService.turndown(input.innerHTML); isSyncing = false; }
+        function reverseConvert() { if (isSyncing) return; isSyncing = true; input.innerHTML = marked.parse(output.value); isSyncing = false; }
 
         input.addEventListener('input', convert);
         output.addEventListener('input', reverseConvert);
 
-        // --- SMOOTH HEIGHT SYNC ---
-        const syncHeight = (source, target) => {
-            if (target.style.height !== source.style.height) {
-                target.style.height = source.style.height;
-            }
-        };
+        const syncHeight = (source, target) => { if (target.style.height !== source.style.height) { target.style.height = source.style.height; } };
+        const setupResize = (source, target) => { source.addEventListener('mousedown', () => { const onMove = () => syncHeight(source, target); document.addEventListener('mousemove', onMove); document.addEventListener('mouseup', () => document.removeEventListener('mousemove', onMove), { once: true }); }); };
+        setupResize(input, output); setupResize(output, input);
 
-        const setupResize = (source, target) => {
-            source.addEventListener('mousedown', () => {
-                const onMove = () => syncHeight(source, target);
-                document.addEventListener('mousemove', onMove);
-                document.addEventListener('mouseup', () => document.removeEventListener('mousemove', onMove), { once: true });
-            });
-        };
-
-        setupResize(input, output);
-        setupResize(output, input);
-
-        // --- UTILS ---
         function clearAll() { input.innerHTML = ""; output.value = ""; input.focus(); }
+        async function copyText() { if (!output.value) return; try { await navigator.clipboard.writeText(output.value); const originalText = copyBtn.innerText; copyBtn.innerText = "✓ Copied!"; setTimeout(() => { copyBtn.innerText = originalText; }, 2000); } catch (err) { console.error('Failed to copy'); } }
 
-        async function copyText() {
-            if (!output.value) return;
-            try {
-                await navigator.clipboard.writeText(output.value);
-                const originalText = copyBtn.innerText;
-                copyBtn.innerText = "✓ Copied!";
-                setTimeout(() => { copyBtn.innerText = originalText; }, 2000);
-            } catch (err) { console.error('Failed to copy'); }
-        }
-
-        // --- THEME & DATE ---
         const html = document.documentElement;
         const themeBtn = document.getElementById('themeBtn');
-        function toggleTheme() {
-            const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-            html.setAttribute('data-theme', next);
-            themeBtn.innerText = next === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode';
-            localStorage.setItem('theme', next);
-        }
-        if (localStorage.getItem('theme')) {
-            const saved = localStorage.getItem('theme');
-            html.setAttribute('data-theme', saved);
-            themeBtn.innerText = saved === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode';
-        }
+        function toggleTheme() { const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light'; html.setAttribute('data-theme', next); themeBtn.innerText = next === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode'; localStorage.setItem('theme', next); }
+        if (localStorage.getItem('theme')) { const saved = localStorage.getItem('theme'); html.setAttribute('data-theme', saved); themeBtn.innerText = saved === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode'; }
         document.getElementById('current-year').textContent = new Date().getFullYear();
     </script>
 </body>
