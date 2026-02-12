@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+   <!-- Main Page -->
    <url>
       <loc>https://notetoprompt.com/</loc>
-      <lastmod>2026-02-11</lastmod>
-      <changefreq>monthly</changefreq>
       <priority>1.0</priority>
+   </url>
+   <!-- Programmatic Variants -->
+   <url>
+      <loc>https://notetoprompt.com/?ref=word</loc>
+      <priority>0.8</priority>
+   </url>
+   <url>
+      <loc>https://notetoprompt.com/?ref=google-docs</loc>
+      <priority>0.8</priority>
+   </url>
+   <url>
+      <loc>https://notetoprompt.com/?ref=onenote</loc>
+      <priority>0.8</priority>
+   </url>
+   <url>
+      <loc>https://notetoprompt.com/?ref=notion</loc>
+      <priority>0.8</priority>
    </url>
 </urlset>
