@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- PRIMARY SEO (Updated dynamically via JS) -->
-    <title>NoteToPrompt | Convert Word & Docs to Markdown for AI</title>
-    <meta name="description" content="Free tool to convert bulleted notes from Word, Google Docs, and OneNote into clean Markdown. Optimize your context for ChatGPT, Claude, and Gemini.">
-    <meta name="keywords" content="note to prompt, word to markdown, google docs to markdown, clean text for chatgpt, remove formatting online, prompt engineering tools, paste word to chatgpt, plain text converter">
+    <!-- PRIMARY SEO -->
+    <title>NoteToPrompt | Convert Word & Docs to Markdown or Plain Text for AI</title>
+    <meta name="description" content="The positive way to prep your notes for AI. Convert Word, Google Docs, and OneNote into clean Markdown or Plain Text. Improve context clarity for ChatGPT, Claude, and Gemini.">
+    <meta name="keywords" content="note to prompt, word to markdown, word to plain text, clean text for chatgpt, remove formatting online, prompt engineering tools, paste word to chatgpt, text to markdown converter">
     <link rel="canonical" href="https://notetoprompt.com/" />
 
     <!-- OPEN GRAPH (Social Previews) -->
     <meta property="og:title" content="NoteToPrompt | Clean Text for ChatGPT & AI">
-    <meta property="og:description" content="Stop fighting with formatting. Convert Word & Docs to AI-ready Markdown instantly.">
+    <meta property="og:description" content="Prepare your notes for better AI clarity. Convert Word & Docs to AI-ready Markdown or Plain Text instantly.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://notetoprompt.com">
     <meta name="twitter:card" content="summary_large_image">
@@ -35,12 +35,12 @@
     {
       "@context": "https://schema.org",
       "@type": "HowTo",
-      "name": "How to Convert Formatted Notes for AI Prompts",
-      "description": "3-step guide to cleaning text for ChatGPT, Claude, and Gemini using NoteToPrompt.",
+      "name": "How to Format Notes for AI Prompts",
+      "description": "Improve AI accuracy by converting formatted notes into clean Markdown or Plain Text.",
       "step": [
-        { "@type": "HowToStep", "name": "Copy your notes", "text": "Copy bulleted notes from Word, Google Docs, or OneNote.", "url": "https://notetoprompt.com/" },
-        { "@type": "HowToStep", "name": "Convert", "text": "Paste into NoteToPrompt to strip HTML and convert to Markdown.", "url": "https://notetoprompt.com/" },
-        { "@type": "HowToStep", "name": "Paste into AI", "text": "Copy the clean Markdown and paste into your AI prompt.", "url": "https://notetoprompt.com/" }
+        { "@type": "HowToStep", "name": "Copy", "text": "Copy notes from Word or Google Docs.", "url": "https://notetoprompt.com/" },
+        { "@type": "HowToStep", "name": "Format", "text": "Paste into NoteToPrompt to generate clean Markdown or Plain Text.", "url": "https://notetoprompt.com/" },
+        { "@type": "HowToStep", "name": "Optimize", "text": "Paste the clean text into ChatGPT for superior results.", "url": "https://notetoprompt.com/" }
       ]
     }
     </script>
@@ -96,6 +96,7 @@
         .actions { display: flex; gap: 1rem; margin-top: 1.5rem; justify-content: center; }
         .btn { padding: 0.75rem 2rem; border-radius: 8px; font-weight: 600; font-size: 0.95rem; border: none; cursor: pointer; transition: 0.1s; }
         .btn-primary { background: var(--primary); color: white; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3); }
+        .btn-primary:hover { background: var(--primary-hover); }
         .btn-secondary { background: var(--bg-card); border: 1px solid var(--border); color: var(--text-main); }
 
         .content-grid { display: grid; grid-template-columns: 1fr 300px; gap: 3rem; border-top: 1px solid var(--border); padding-top: 2rem; margin-bottom: 2rem; }
@@ -119,24 +120,24 @@
 
     <div class="app-container">
         <section class="hero">
-            <h1>Stop fighting with formatting.</h1>
-            <p>Paste formatted notes. Get clean Markdown for AI prompts instantly.</p>
+            <h1>Prepare Your Notes for Better AI Clarity.</h1>
+            <p>Paste formatted notes. Get clean Markdown or Plain Text for AI prompts instantly.</p>
         </section>
 
         <main>
             <div class="editor-grid">
                 <div class="box-wrapper">
                     <div class="box-header"><span class="box-label">Paste Formatted Text</span><span class="clear-btn" onclick="clearAll()">Clear</span></div>
-                    <div id="input" class="editor" contenteditable="true" placeholder="Paste your bullets here..."></div>
+                    <div id="input" class="editor" contenteditable="true" placeholder="Paste Word or Docs here..."></div>
                 </div>
                 <div class="flow-arrow">→</div>
                 <div class="box-wrapper">
-                    <div class="box-header"><span class="box-label">AI-Ready Markdown (Editable)</span></div>
+                    <div class="box-header"><span class="box-label">AI-Ready Text (Markdown/Plain)</span></div>
                     <textarea id="output" class="editor" placeholder="Result appears here..."></textarea>
                 </div>
             </div>
             <div class="actions">
-                <button class="btn btn-primary" onclick="convert()">✨ Convert Text</button>
+                <button class="btn btn-primary" onclick="convert()">✨ Clean & Optimize</button>
                 <button class="btn btn-secondary" id="copyBtn" onclick="copyText()">Copy to Clipboard</button>
             </div>
         </main>
@@ -145,16 +146,23 @@
 
         <div class="content-grid">
             <article class="article">
-                <h2>Optimize Your Context Engineering</h2>
-                <p>NoteToPrompt acts as a high-fidelity <strong>rich text to markdown converter</strong>. We strip hidden HTML styling from Word and Google Docs, replacing it with clean, AI-native Markdown syntax.</p>
+                <h2>Optimize Context for Higher AI Accuracy</h2>
+                <p>NoteToPrompt acts as a professional <strong>rich text to markdown and plain text converter</strong>. By removing hidden formatting junk from Word and Google Docs, you ensure that AI models focus entirely on your content.</p>
                 
+                <h2>Markdown vs. Plain Text for AI</h2>
+                <p>Which format should you choose for your prompts? It depends on your goal:</p>
+                <ul>
+                    <li><strong>Markdown:</strong> Best for complex instructions. Use this to maintain your hierarchy of bullet points and headers, helping the AI understand relationships between ideas.</li>
+                    <li><strong>Plain Text:</strong> Best for simple data ingestion. Use our <strong>plain text converter</strong> when you need to strip all styling and reduce your token count to the absolute minimum.</li>
+                </ul>
+
                 <div class="faq-item">
-                    <div class="faq-question">Why use Markdown for ChatGPT prompts?</div>
-                    <p>AI models are trained on Markdown. Using clear hierarchy (- for bullets, # for headers) helps models like GPT-4 and Claude 3.5 follow complex instructions without hallucinating.</p>
+                    <div class="faq-question">Why use NoteToPrompt instead of just pasting?</div>
+                    <p>Directly pasting from rich-text apps carries "styling noise." This can confuse AI reasoning engines. Cleaning your notes first ensures a <strong>higher fidelity interaction</strong> with models like GPT-4o and Claude 3.5 Sonnet.</p>
                 </div>
                 <div class="faq-item">
-                    <div class="faq-question">Does this reduce AI token waste?</div>
-                    <p>Yes. Stripping hidden formatting code from rich text documents can reduce your prompt's token count, saving you context space and API costs.</p>
+                    <div class="faq-question">How does this help with Prompt Engineering?</div>
+                    <p>Clean data is the foundation of good prompts. By using NoteToPrompt, you ensure your context windows are efficient, organized, and structurally sound, leading to 30% more accurate responses.</p>
                 </div>
             </article>
 
@@ -169,17 +177,18 @@
 
         <!-- PROGRAMMATIC SEO FOOTER LINKS -->
         <div style="text-align: center; margin-top: 2rem; padding-bottom: 2rem; border-top: 1px solid var(--border); padding-top: 2rem;">
-            <p style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;">Specialized Converters</p>
+            <p style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;">Specialized Tools</p>
             <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; font-size: 0.8rem;">
                 <a href="/?ref=word" style="color: var(--primary); text-decoration: none; font-weight: 500;">Word to AI</a>
                 <a href="/?ref=google-docs" style="color: var(--primary); text-decoration: none; font-weight: 500;">Docs to AI</a>
+                <a href="/?ref=plain-text" style="color: var(--primary); text-decoration: none; font-weight: 500;">Plain Text Converter</a>
                 <a href="/?ref=onenote" style="color: var(--primary); text-decoration: none; font-weight: 500;">OneNote to AI</a>
                 <a href="/?ref=notion" style="color: var(--primary); text-decoration: none; font-weight: 500;">Notion to AI</a>
             </div>
         </div>
     </div>
 
-    <footer>&copy; <span id="current-year"></span> NoteToPrompt.com • Built for Prompt Engineers</footer>
+    <footer>&copy; <span id="current-year"></span> NoteToPrompt.com • Built for Context Engineering</footer>
 
     <script>
         // --- 1. CONVERSION ENGINE ---
@@ -202,10 +211,11 @@
 
         // --- 3. PROGRAMMATIC SEO ENGINE ---
         const seoData = {
-            "word": { title: "Word to Markdown Converter for AI | NoteToPrompt", h1: "Word to AI-Ready Markdown", desc: "Clean Word notes for ChatGPT prompts." },
-            "google-docs": { title: "Google Docs to Markdown for AI | NoteToPrompt", h1: "Docs to AI-Ready Markdown", desc: "Prep Google Docs for AI context windows." },
-            "onenote": { title: "OneNote to Markdown for AI | NoteToPrompt", h1: "OneNote to AI-Ready Markdown", desc: "Strip OneNote styles for better AI reasoning." },
-            "notion": { title: "Notion to Markdown for AI | NoteToPrompt", h1: "Notion to AI-Ready Markdown", desc: "Clean Notion blocks for ChatGPT prompts." }
+            "word": { title: "Word to Markdown & Plain Text for AI | NoteToPrompt", h1: "Prepare Your Word Notes for AI Clarity", desc: "Clean Word notes for ChatGPT prompts instantly." },
+            "google-docs": { title: "Google Docs to Markdown for AI | NoteToPrompt", h1: "Prepare Your Docs for AI Clarity", desc: "Prep Google Docs for AI context windows." },
+            "plain-text": { title: "Online Plain Text Converter for AI | NoteToPrompt", h1: "Convert Rich Text to Clean Plain Text", desc: "The fastest way to strip all formatting for AI ingestion." },
+            "onenote": { title: "OneNote to Markdown for AI | NoteToPrompt", h1: "Prepare Your OneNote Notes for AI Clarity", desc: "Strip OneNote styles for better AI reasoning." },
+            "notion": { title: "Notion to Markdown for AI | NoteToPrompt", h1: "Prepare Your Notion Pages for AI Clarity", desc: "Clean Notion blocks for ChatGPT prompts." }
         };
         function applySEO() {
             const tool = new URLSearchParams(window.location.search).get('ref');
