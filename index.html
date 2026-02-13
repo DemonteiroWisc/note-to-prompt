@@ -17,7 +17,8 @@
     <meta property="og:url" content="https://notetoprompt.com">
     <meta name="twitter:card" content="summary_large_image">
 
-    <link rel="icon" type="image/png" href="favicon.png">
+    <!-- FAVICON (Using Absolute URL for high reliability) -->
+    <link rel="icon" type="image/png" href="https://notetoprompt.com/favicon.png">
 
     <!-- JSON-LD SCHEMA: SOFTWARE APPLICATION -->
     <script type="application/ld+json">
@@ -36,6 +37,7 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
+      "@context": "https://schema.org",
       "@type": "HowTo",
       "name": "How to Format Notes for AI Prompts",
       "description": "Improve AI accuracy by converting formatted notes into clean Markdown or Plain Text.",
@@ -47,7 +49,6 @@
     }
     </script>
 
-    <!-- FAVICON -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- LIBRARIES -->
@@ -66,9 +67,37 @@
             --glass: rgba(15, 23, 42, 0.9);
         }
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; line-height: 1.5; transition: background 0.3s, color 0.3s; }
-        header { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(12px); background: var(--glass); border-bottom: 1px solid var(--border); padding: 0.75rem 2rem; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-weight: 800; font-size: 1.25rem; text-decoration: none; color: var(--text-main); letter-spacing: -0.02em; }
+        
+        /* HEADER & LOGO STYLING */
+        header { 
+            position: sticky; 
+            top: 0; 
+            z-index: 100; 
+            backdrop-filter: blur(12px); 
+            background: var(--glass); 
+            border-bottom: 1px solid var(--border); 
+            padding: 0.5rem 2rem; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        .logo { 
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800; 
+            font-size: 1.25rem; 
+            text-decoration: none; 
+            color: var(--text-main); 
+            letter-spacing: -0.02em; 
+        }
         .logo span { color: var(--primary); }
+        .logo-img {
+            height: 32px;
+            width: auto;
+            border-radius: 6px;
+        }
+
         .theme-toggle { background: transparent; border: 1px solid var(--border); color: var(--text-muted); padding: 5px 12px; border-radius: 20px; cursor: pointer; font-size: 0.8rem; font-weight: 500; }
         
         .ad-slot { background-color: var(--ad-bg); background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.03) 10px, rgba(0,0,0,0.03) 20px); border: 1px dashed var(--border); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 0.7rem; font-weight: 600; text-transform: uppercase; }
@@ -113,7 +142,10 @@
 <body>
 
     <header>
-        <a href="/" class="logo">NoteTo<span>Prompt</span></a>
+        <a href="/" class="logo">
+            <img src="notetoprompt_logo.png" alt="NoteToPrompt Logo" class="logo-img">
+            NoteTo<span>Prompt</span>
+        </a>
         <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()">🌙 Dark Mode</button>
     </header>
 
