@@ -4,11 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- PRIMARY SEO -->
+    <!-- DYNAMIC SEO TITLES & DESCRIPTIONS -->
     <title>NoteToPrompt | Convert Word & Docs to Markdown or Plain Text for AI</title>
-    <meta name="description" content="The positive way to prep your notes for AI. Convert Word, Google Docs, and OneNote into clean Markdown or Plain Text. Improve context clarity for ChatGPT, Claude, and Gemini.">
+    <meta name="description" content="Prepare your notes for better AI clarity. Convert Word, Google Docs, and OneNote into clean Markdown or Plain Text. Improve results in ChatGPT, Claude, and Gemini.">
     <meta name="keywords" content="note to prompt, word to markdown, word to plain text, clean text for chatgpt, remove formatting online, prompt engineering tools, paste word to chatgpt, text to markdown converter">
-    <link rel="canonical" href="https://notetoprompt.com/" />
+
+    <!-- DYNAMIC CANONICAL TAG (Fixes Search Console Indexing Issues) -->
+    <script>
+        (function() {
+            var link = document.createElement('link');
+            link.rel = 'canonical';
+            link.href = window.location.protocol + '//' + window.location.host + window.location.pathname + window.location.search;
+            document.head.appendChild(link);
+        })();
+    </script>
+
+    <!-- COMBINED SCHEMA GRAPH (Fixes the "Unparsable structured data" Duplicate Error) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://notetoprompt.com/#software",
+          "name": "NoteToPrompt",
+          "operatingSystem": "All",
+          "applicationCategory": "UtilitiesApplication",
+          "description": "Converts rich text from Word and Google Docs into clean Markdown and Plain Text for AI prompts.",
+          "offers": { "@type": "Offer", "price": "0.00", "priceCurrency": "USD" }
+        },
+        {
+          "@type": "HowTo",
+          "@id": "https://notetoprompt.com/#howto",
+          "name": "How to Format Notes for AI Prompts",
+          "description": "Improve AI accuracy by converting formatted notes into clean Markdown or Plain Text.",
+          "step": [
+            { "@type": "HowToStep", "name": "Copy", "text": "Copy notes from Word or Google Docs." },
+            { "@type": "HowToStep", "name": "Format", "text": "Paste into NoteToPrompt to generate clean Markdown or Plain Text." },
+            { "@type": "HowToStep", "name": "Optimize", "text": "Paste the clean text into ChatGPT for superior results." }
+          ]
+        }
+      ]
+    }
+    </script>
 
     <!-- OPEN GRAPH (Social Previews) -->
     <meta property="og:title" content="NoteToPrompt | Clean Text for ChatGPT & AI">
@@ -17,41 +55,11 @@
     <meta property="og:url" content="https://notetoprompt.com">
     <meta name="twitter:card" content="summary_large_image">
 
-    <!-- FAVICON (Using Absolute URL for high reliability) -->
+    <!-- FAVICON -->
     <link rel="icon" type="image/png" href="https://notetoprompt.com/favicon.png">
 
-    <!-- JSON-LD SCHEMA: SOFTWARE APPLICATION -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "NoteToPrompt",
-      "operatingSystem": "All",
-      "applicationCategory": "UtilitiesApplication",
-      "description": "Converts rich text from Word and Google Docs into clean Markdown and Plain Text for AI prompts.",
-      "offers": { "@type": "Offer", "price": "0.00", "priceCurrency": "USD" }
-    }
-    </script>
-
-    <!-- JSON-LD SCHEMA: HOW-TO -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@context": "https://schema.org",
-      "@type": "HowTo",
-      "name": "How to Format Notes for AI Prompts",
-      "description": "Improve AI accuracy by converting formatted notes into clean Markdown or Plain Text.",
-      "step": [
-        { "@type": "HowToStep", "name": "Copy", "text": "Copy notes from Word or Google Docs.", "url": "https://notetoprompt.com/" },
-        { "@type": "HowToStep", "name": "Format", "text": "Paste into NoteToPrompt to generate clean Markdown or Plain Text.", "url": "https://notetoprompt.com/" },
-        { "@type": "HowToStep", "name": "Optimize", "text": "Paste the clean text into ChatGPT for superior results.", "url": "https://notetoprompt.com/" }
-      ]
-    }
-    </script>
-
+    <!-- FONTS & LIBRARIES -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- LIBRARIES -->
     <script src="https://unpkg.com/turndown/dist/turndown.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
@@ -68,35 +76,10 @@
         }
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; line-height: 1.5; transition: background 0.3s, color 0.3s; }
         
-        /* HEADER & LOGO STYLING */
-        header { 
-            position: sticky; 
-            top: 0; 
-            z-index: 100; 
-            backdrop-filter: blur(12px); 
-            background: var(--glass); 
-            border-bottom: 1px solid var(--border); 
-            padding: 0.5rem 2rem; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-        }
-        .logo { 
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 800; 
-            font-size: 1.25rem; 
-            text-decoration: none; 
-            color: var(--text-main); 
-            letter-spacing: -0.02em; 
-        }
+        header { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(12px); background: var(--glass); border-bottom: 1px solid var(--border); padding: 0.5rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 1.25rem; text-decoration: none; color: var(--text-main); letter-spacing: -0.02em; }
         .logo span { color: var(--primary); }
-        .logo-img {
-            height: 32px;
-            width: auto;
-            border-radius: 6px;
-        }
+        .logo-img { height: 32px; width: auto; border-radius: 6px; }
 
         .theme-toggle { background: transparent; border: 1px solid var(--border); color: var(--text-muted); padding: 5px 12px; border-radius: 20px; cursor: pointer; font-size: 0.8rem; font-weight: 500; }
         
@@ -208,7 +191,6 @@
             </aside>
         </div>
 
-        <!-- PROGRAMMATIC SEO FOOTER LINKS -->
         <div style="text-align: center; margin-top: 2rem; padding-bottom: 2rem; border-top: 1px solid var(--border); padding-top: 2rem;">
             <p style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;">Specialized Tools</p>
             <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; font-size: 0.8rem;">
@@ -242,13 +224,13 @@
         const setupResize = (src, tgt) => { src.addEventListener('mousedown', () => { const move = () => syncHeight(src, tgt); document.addEventListener('mousemove', move); document.addEventListener('mouseup', () => document.removeEventListener('mousemove', move), { once: true }); }); };
         setupResize(input, output); setupResize(output, input);
 
-        // --- 3. PROGRAMMATIC SEO ENGINE ---
+        // --- 3. DYNAMIC SEO & DESCRIPTION ENGINE ---
         const seoData = {
-            "word": { title: "Word to Markdown & Plain Text for AI | NoteToPrompt", h1: "Prepare Your Word Notes for AI Clarity", desc: "Clean Word notes for ChatGPT prompts instantly." },
-            "google-docs": { title: "Google Docs to Markdown for AI | NoteToPrompt", h1: "Prepare Your Docs for AI Clarity", desc: "Prep Google Docs for AI context windows." },
-            "plain-text": { title: "Online Plain Text Converter for AI | NoteToPrompt", h1: "Convert Rich Text to Clean Plain Text", desc: "The fastest way to strip all formatting for AI ingestion." },
-            "onenote": { title: "OneNote to Markdown for AI | NoteToPrompt", h1: "Prepare Your OneNote Notes for AI Clarity", desc: "Strip OneNote styles for better AI reasoning." },
-            "notion": { title: "Notion to Markdown for AI | NoteToPrompt", h1: "Prepare Your Notion Pages for AI Clarity", desc: "Clean Notion blocks for ChatGPT prompts." }
+            "word": { title: "Word to Markdown & Plain Text for AI | NoteToPrompt", h1: "Prepare Your Word Notes for AI Clarity", desc: "Convert Microsoft Word (.docx) notes to clean Markdown or Plain Text for ChatGPT prompts instantly." },
+            "google-docs": { title: "Google Docs to Markdown for AI | NoteToPrompt", h1: "Prepare Your Google Docs for AI Clarity", desc: "The fastest way to clean Google Docs formatting for AI context windows." },
+            "plain-text": { title: "Online Plain Text Converter for AI | NoteToPrompt", h1: "Convert Rich Text to Clean Plain Text", desc: "Strip all formatting, fonts, and styles for clean AI ingestion." },
+            "onenote": { title: "OneNote to Markdown for AI | NoteToPrompt", h1: "Prepare Your OneNote Notes for AI Clarity", desc: "Convert OneNote formatting into clean Markdown for better AI reasoning." },
+            "notion": { title: "Notion to Markdown for AI | NoteToPrompt", h1: "Prepare Your Notion Pages for AI Clarity", desc: "Clean up Notion exports and pastes for ChatGPT and Claude prompts." }
         };
         function applySEO() {
             const tool = new URLSearchParams(window.location.search).get('ref');
@@ -256,7 +238,8 @@
                 const data = seoData[tool];
                 document.title = data.title;
                 document.querySelector('.hero h1').innerText = data.h1;
-                document.querySelector('meta[name="description"]').setAttribute("content", data.desc);
+                const metaDesc = document.querySelector('meta[name="description"]');
+                if (metaDesc) metaDesc.setAttribute("content", data.desc);
             }
         }
         window.addEventListener('DOMContentLoaded', applySEO);
