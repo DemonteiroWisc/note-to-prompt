@@ -2,14 +2,8 @@
 <html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- DYNAMIC SEO TITLES & DESCRIPTIONS -->
-    <title>NoteToPrompt | Convert Word & Docs to Markdown or Plain Text for AI</title>
-    <meta name="description" content="Prepare your notes for better AI clarity. Convert Word, Google Docs, and OneNote into clean Markdown or Plain Text. Improve results in ChatGPT, Claude, and Gemini.">
-    <meta name="keywords" content="note to prompt, word to markdown, word to plain text, clean text for chatgpt, remove formatting online, prompt engineering tools, paste word to chatgpt, text to markdown converter">
-
-    <!-- DYNAMIC CANONICAL TAG (Fixes Search Console Indexing Issues) -->
+    <!-- 1. DYNAMIC CANONICAL (Must be at the very top to fix Indexing issues) -->
     <script>
         (function() {
             var link = document.createElement('link');
@@ -19,7 +13,14 @@
         })();
     </script>
 
-    <!-- COMBINED SCHEMA GRAPH (Fixes the "Unparsable structured data" Duplicate Error) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- DYNAMIC SEO TITLES & DESCRIPTIONS -->
+    <title>NoteToPrompt | Convert Word & Docs to Markdown or Plain Text for AI</title>
+    <meta name="description" content="Prepare your notes for better AI clarity. Convert Word, Google Docs, and OneNote into clean Markdown or Plain Text. Improve results in ChatGPT, Claude, and Gemini.">
+    <meta name="keywords" content="note to prompt, word to markdown, word to plain text, clean text for chatgpt, remove formatting online, prompt engineering tools, paste word to chatgpt, text to markdown converter">
+
+    <!-- CONSOLIDATED SCHEMA GRAPH (Fixes the "Unparsable structured data" Duplicate Error) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -48,17 +49,14 @@
     }
     </script>
 
-    <!-- OPEN GRAPH (Social Previews) -->
+    <!-- OPEN GRAPH -->
     <meta property="og:title" content="NoteToPrompt | Clean Text for ChatGPT & AI">
     <meta property="og:description" content="Prepare your notes for better AI clarity. Convert Word & Docs to AI-ready Markdown or Plain Text instantly.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://notetoprompt.com">
     <meta name="twitter:card" content="summary_large_image">
 
-    <!-- FAVICON -->
     <link rel="icon" type="image/png" href="https://notetoprompt.com/favicon.png">
-
-    <!-- FONTS & LIBRARIES -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/turndown/dist/turndown.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -75,50 +73,43 @@
             --glass: rgba(15, 23, 42, 0.9);
         }
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-body); color: var(--text-main); margin: 0; line-height: 1.5; transition: background 0.3s, color 0.3s; }
-        
         header { position: sticky; top: 0; z-index: 100; backdrop-filter: blur(12px); background: var(--glass); border-bottom: 1px solid var(--border); padding: 0.5rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        
+        /* LOGO FIX: Wrapped text in div to prevent flex-gap splitting words */
         .logo { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 1.25rem; text-decoration: none; color: var(--text-main); letter-spacing: -0.02em; }
         .logo span { color: var(--primary); }
         .logo-img { height: 32px; width: auto; border-radius: 6px; }
+        .logo-text-wrapper { display: block; }
 
         .theme-toggle { background: transparent; border: 1px solid var(--border); color: var(--text-muted); padding: 5px 12px; border-radius: 20px; cursor: pointer; font-size: 0.8rem; font-weight: 500; }
-        
         .ad-slot { background-color: var(--ad-bg); background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.03) 10px, rgba(0,0,0,0.03) 20px); border: 1px dashed var(--border); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 0.7rem; font-weight: 600; text-transform: uppercase; }
         .ad-leaderboard { width: 100%; max-width: 728px; height: 90px; margin: 1rem auto 0.5rem auto; }
         .ad-mid { width: 100%; max-width: 728px; height: 90px; margin: 2rem auto; }
         .ad-sidebar { width: 300px; height: 250px; margin-bottom: 1rem; }
-
         .hero { text-align: center; padding: 1rem 1rem 1.5rem 1rem; max-width: 700px; margin: 0 auto; }
         .hero h1 { font-size: 1.8rem; font-weight: 800; margin: 0 0 0.5rem 0; letter-spacing: -0.02em; }
         .hero p { font-size: 1rem; color: var(--text-muted); margin: 0; }
-        
         .app-container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
         .editor-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: center; margin-top: 0.5rem; }
         .flow-arrow { color: var(--border); font-size: 1.5rem; }
         @media (max-width: 768px) { .editor-grid { grid-template-columns: 1fr; } .flow-arrow { display: none; } }
-
         .box-wrapper { display: flex; flex-direction: column; gap: 0.25rem; width: 100%; }
         .box-header { display: flex; justify-content: space-between; align-items: center; padding: 0 0.25rem; }
         .box-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); }
         .clear-btn { color: var(--primary); font-size: 0.7rem; font-weight: 600; cursor: pointer; }
-        
-        .editor { height: 400px; min-height: 150px; max-height: 1200px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; font-size: 0.95rem; outline: none; box-shadow: var(--shadow); resize: vertical; overflow: auto; transition: border 0.2s; }
+        .editor { height: 400px; min-height: 150px; max-height: 1200px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; font-size: 0.95rem; outline: none; box-shadow: var(--shadow); resize: vertical; overflow: auto; transition: border 0.2s, background 0.3s, color 0.3s; }
         .editor:focus { border-color: var(--primary); }
         #output { font-family: 'Courier New', monospace; color: var(--text-main); }
-        
         .actions { display: flex; gap: 1rem; margin-top: 1.5rem; justify-content: center; }
         .btn { padding: 0.75rem 2rem; border-radius: 8px; font-weight: 600; font-size: 0.95rem; border: none; cursor: pointer; transition: 0.1s; }
         .btn-primary { background: var(--primary); color: white; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3); }
-        .btn-primary:hover { background: var(--primary-hover); }
         .btn-secondary { background: var(--bg-card); border: 1px solid var(--border); color: var(--text-main); }
-
         .content-grid { display: grid; grid-template-columns: 1fr 300px; gap: 3rem; border-top: 1px solid var(--border); padding-top: 2rem; margin-bottom: 2rem; }
         @media (max-width: 900px) { .content-grid { grid-template-columns: 1fr; } .sidebar { display: none; } }
         .article h2 { font-size: 1.25rem; margin-bottom: 0.75rem; letter-spacing: -0.01em; margin-top: 0; }
         .article p { color: var(--text-muted); margin-bottom: 1.25rem; font-size: 0.95rem; }
         .faq-item { margin-bottom: 1.5rem; }
         .faq-question { font-weight: 700; font-size: 1rem; margin-bottom: 0.25rem; color: var(--text-main); }
-        
         footer { text-align: center; padding: 2rem; color: var(--text-muted); font-size: 0.8rem; border-top: 1px solid var(--border); }
     </style>
 </head>
@@ -127,8 +118,7 @@
     <header>
         <a href="/" class="logo">
             <img src="notetoprompt_logo.png" alt="NoteToPrompt Logo" class="logo-img">
-            <!-- Wrap the text in a div to prevent the flex gap from splitting it -->
-            <div>NoteTo<span>Prompt</span></div>
+            <div class="logo-text-wrapper">NoteTo<span>Prompt</span></div>
         </a>
         <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()">🌙 Dark Mode</button>
     </header>
@@ -164,7 +154,8 @@
         <div class="content-grid">
             <article class="article">
                 <h2>Optimize Context for Higher AI Accuracy</h2>
-                <p>NoteToPrompt acts as a professional <strong>rich text to markdown and plain text converter</strong>. By removing hidden formatting junk from Word and Google Docs, you ensure that AI models focus entirely on your content.</p>
+                <!-- This paragraph is targeted by JS to make sub-pages unique for SEO -->
+                <p id="dynamic-info">NoteToPrompt acts as a professional <strong>rich text to markdown and plain text converter</strong>. By removing hidden formatting junk from Word and Google Docs, you ensure that AI models focus entirely on your content.</p>
                 
                 <h2>Markdown vs. Plain Text for AI</h2>
                 <p>Which format should you choose for your prompts? It depends on your goal:</p>
@@ -225,27 +216,57 @@
         const setupResize = (src, tgt) => { src.addEventListener('mousedown', () => { const move = () => syncHeight(src, tgt); document.addEventListener('mousemove', move); document.addEventListener('mouseup', () => document.removeEventListener('mousemove', move), { once: true }); }); };
         setupResize(input, output); setupResize(output, input);
 
-        // --- 3. DYNAMIC SEO & DESCRIPTION ENGINE ---
+        // --- 3. ENHANCED PROGRAMMATIC SEO ENGINE (Fixes "Duplicate Canonical" issue) ---
         const seoData = {
-            "word": { title: "Word to Markdown & Plain Text for AI | NoteToPrompt", h1: "Prepare Your Word Notes for AI Clarity", desc: "Convert Microsoft Word (.docx) notes to clean Markdown or Plain Text for ChatGPT prompts instantly." },
-            "google-docs": { title: "Google Docs to Markdown for AI | NoteToPrompt", h1: "Prepare Your Google Docs for AI Clarity", desc: "The fastest way to clean Google Docs formatting for AI context windows." },
-            "plain-text": { title: "Online Plain Text Converter for AI | NoteToPrompt", h1: "Convert Rich Text to Clean Plain Text", desc: "Strip all formatting, fonts, and styles for clean AI ingestion." },
-            "onenote": { title: "OneNote to Markdown for AI | NoteToPrompt", h1: "Prepare Your OneNote Notes for AI Clarity", desc: "Convert OneNote formatting into clean Markdown for better AI reasoning." },
-            "notion": { title: "Notion to Markdown for AI | NoteToPrompt", h1: "Prepare Your Notion Pages for AI Clarity", desc: "Clean up Notion exports and pastes for ChatGPT and Claude prompts." }
+            "word": { 
+                title: "Word to Markdown & Plain Text for AI | NoteToPrompt", 
+                h1: "Prepare Your Word Notes for AI Clarity", 
+                desc: "Convert Microsoft Word (.docx) notes to clean Markdown or Plain Text for ChatGPT prompts instantly.",
+                info: "Directly pasting from <strong>Microsoft Word</strong> carries hidden XML tags that confuse AI. NoteToPrompt strips 'Word-junk' while preserving your nested bullets and indentation."
+            },
+            "google-docs": { 
+                title: "Google Docs to Markdown for AI | NoteToPrompt", 
+                h1: "Prepare Your Google Docs for AI Clarity", 
+                desc: "The fastest way to clean Google Docs formatting for AI context windows.",
+                info: "<strong>Google Docs</strong> often adds extra line breaks and spans when pasting into ChatGPT. Our tool ensures your Docs hierarchy is translated into clean, AI-native Markdown."
+            },
+            "plain-text": { 
+                title: "Online Plain Text Converter for AI | NoteToPrompt", 
+                h1: "Convert Rich Text to Clean Plain Text", 
+                desc: "Strip all formatting, fonts, and styles for clean AI ingestion.",
+                info: "Sometimes you don't need Markdown. Our <strong>Plain Text Converter</strong> is built for 'zero-noise' ingestion, perfect for feeding raw data into LLM context windows."
+            },
+            "onenote": { 
+                title: "OneNote to Markdown for AI | NoteToPrompt", 
+                h1: "Prepare Your OneNote Notes for AI Clarity", 
+                desc: "Convert OneNote formatting into clean Markdown for better AI reasoning.",
+                info: "<strong>OneNote</strong> lists are notoriously difficult to paste into AI chat boxes. We fix the tab-spacing and bullet issues common with OneNote-to-AI workflows."
+            },
+            "notion": { 
+                title: "Notion to Markdown for AI | NoteToPrompt", 
+                h1: "Prepare Your Notion Pages for AI Clarity", 
+                desc: "Clean up Notion exports and pastes for ChatGPT and Claude prompts.",
+                info: "<strong>Notion</strong> blocks often include extra metadata when copied. NoteToPrompt cleans these blocks, making your Notion database exports readable for any AI model."
+            }
         };
+
         function applySEO() {
             const tool = new URLSearchParams(window.location.search).get('ref');
             if (tool && seoData[tool]) {
                 const data = seoData[tool];
                 document.title = data.title;
-                document.querySelector('.hero h1').innerText = data.h1;
+                const h1 = document.querySelector('.hero h1');
+                if (h1) h1.innerText = data.h1;
                 const metaDesc = document.querySelector('meta[name="description"]');
                 if (metaDesc) metaDesc.setAttribute("content", data.desc);
+                // Swaps paragraph text to make the page UNIQUE for Google
+                const infoPara = document.getElementById('dynamic-info');
+                if (infoPara) infoPara.innerHTML = data.info;
             }
         }
         window.addEventListener('DOMContentLoaded', applySEO);
 
-        // --- 4. UTILS & THEME ---
+        // --- 4. UTILS, THEME & DATE ---
         function clearAll() { input.innerHTML = ""; output.value = ""; input.focus(); }
         async function copyText() { if (!output.value) return; try { await navigator.clipboard.writeText(output.value); const oldText = copyBtn.innerText; copyBtn.innerText = "✓ Copied!"; setTimeout(() => copyBtn.innerText = oldText, 2000); } catch (e) {} }
         const html = document.documentElement;
